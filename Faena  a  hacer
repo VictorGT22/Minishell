@@ -6,9 +6,9 @@
 - Gestionar que la ' evite que el shell intercepte los metacaracteres en la secuencia entrecomiullada (no entiendo esto)
 - Gestionar que la " evite que el shell interprete los metacaracteres en la secuencia entreencomillada exceptuando $ 
 - Implementar redericciones: 
-	< debe rederigir input
-	> debe redirigir output
-	<<  “<<” debe recibir un delimitador, después leer del input de la fuente actual
+	"<" debe rederigir input
+	">" debe redirigir output
+	“<<” debe recibir un delimitador, después leer del input de la fuente actual
 		hasta que una línea que contenga solo el delimitador aparezca. Sin embargo,
 		no necesita actualizar el historial
 	“>>” debe redirigir el output en modo append.
@@ -24,3 +24,118 @@ Implementar los built-ins:
 	unset
 	env (sin opciones o  argumentos)
 	exit
+
+PASOS:
+
+Guardamos el env.
+
+1. Mostrar mensaje y path
+2. Obtener mensaje o tecla presionada
+3. debemos manejar varios inputs? si es asi hacemos un binari tree con cada prioridad ( &&, ||, |, &, ;, >, <, <<, >>)
+4. Añadimos comando al historial a no ser que el ultimo comando sea igual al actual
+5. 
+
+
+
+Funciones:
+
+https://03-jon-perez.gitbook.io/coding-library/c/readline
+
+readline:
+	will read a line from the terminal and return it, using
+    prompt as a prompt.  If prompt is NULL or the empty string, no
+    prompt is issued.  The line returned is allocated with malloc(3);
+    the caller must free it when finished.  The line returned has the
+    final newline removed, so only the text of the line remains.
+
+rl_clear_history:
+	es una función proporcionada por la biblioteca GNU Readline que permite limpiar todas las líneas almacenadas en el historial.
+	Esta función no requiere ningún parámetro y no devuelve ningún valor.
+
+rl_on_new_line:
+	se llama después de que el usuario ingresa un comando y se imprime en pantalla. 
+	Esto indica al sistema que se ha movido a una nueva línea vacía y permite que el sistema actualice su estado 
+	interno para el próximo comando del usuario. Sin embargo, es importante tener en cuenta que esta función no ejecuta ninguna 
+	acción específica, sólo indica al sistema que se ha movido a una nueva línea vacía.
+
+rl_replace_line:
+	funciona reemplazando el contenido actual de la línea de comandos con la cadena de texto especificada en el argumento string.
+	Si se especifica 1 en el argumento clear_undo, el historial de deshacer se limpia automáticamente al reemplazar la línea de comandos.
+	Si se especifica 0, el historial de deshacer no se limpia.
+
+rl_redisplay:
+	Se utiliza después de haber realizado cambios en la línea de entrada mediante otras funciones de la biblioteca readline,
+	como rl_replace_line(). Sin llamar a esta función, los cambios realizados en la línea de entrada no se mostrarían en pantalla.
+
+add_history: 
+	add_history() se utiliza para agregar una línea al historial, esta línea se agrega al final del historial
+	y se convierte en la línea actual. Esto es útil cuando el usuario desea agregar una línea al historial después
+	de haber utilizado readline() o cuando se quieren agregar líneas de forma programática al historial. Es importante
+	tener en cuenta que esta función no afecta al archivo de historial, si se tiene un archivo de historial configurado
+	sigue existiendo.
+
+access:
+	access() checks whether the calling process can access the file pathname. If pathname is a symbolic link, it is dereferenced.
+		int access(const char *pathname, int mode);
+		modes: to be performed, and is either the value F_OK, or a mask consisting of the bitwise OR of one or more of R_OK, W_OK, and X_OK.
+		F_OK tests for the existence of the file. R_OK, W_OK, and X_OK test whether the file exists and grants read, write, and execute permissions, respectively.
+
+fork: 	Fork system call is used for creating a new process in Linux, and Unix systems, which is called the child process,
+		which runs concurrently with the process that makes the fork() call (parent process). After a new child process is created,
+		both processes will execute the next instruction following the fork() system call.
+
+
+getcwd: returns the name of the current working directory
+
+
+chdir: 
+	is system function (system call) that is used to change the current working directory. On some systems, this command is
+	used as an alias for the shell command cd. chdir changes the current working directory of the calling process to the directory specified in path. 
+
+stat: 
+	obtains information about the file or directory referenced in path.
+
+
+unlink: deletes a name from the filesystem.  If that name was
+       the last link to a file and no processes have the file open, the
+       file is deleted and the space it was using is made available for
+       reuse.
+
+execve:
+	executes the program referred to by pathname.  This
+    causes the program that is currently being run by the calling
+    process to be replaced with a new program, with newly initialized
+    stack, heap, and (initialized and uninitialized) data segments.
+
+dup:
+
+
+dup2:
+
+
+
+strerror:
+
+
+perror:
+
+
+isatty:
+
+
+ttyname:
+
+
+getenv:
+
+
+opendir:
+	unction shall open a directory stream corresponding to the directory named by the dirname argument. The directory stream is positioned at the first entry.
+	If the type DIR is implemented using a file descriptor, applications shall only be able to open up to a total of {OPEN_MAX} files and directories.
+
+readdir:
+	function returns a pointer to a dirent structure
+       representing the next directory entry in the directory stream
+       pointed to by dirp.  It returns NULL on reaching the end of the
+       directory stream or if an error occurred.
+
