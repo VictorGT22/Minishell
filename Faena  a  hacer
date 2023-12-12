@@ -1,0 +1,26 @@
+- Mostrar entrada mientras se espera un comando nuevo
+- Tener un historial funcional ( haremos una linked donde cada comando que ejecuten se guarde)
+- buscar y ejecutar el ejecutable correcto (basado en la variable PATH o mediante uso de rutas absolutas o relativas)
+- una variable Global
+- No interpretar comillas sin cerrar o caracteres especiales no especificados en el enunciado como barra invertida \ o punto y coma ;
+- Gestionar que la ' evite que el shell intercepte los metacaracteres en la secuencia entrecomiullada (no entiendo esto)
+- Gestionar que la " evite que el shell interprete los metacaracteres en la secuencia entreencomillada exceptuando $ 
+- Implementar redericciones: 
+	< debe rederigir input
+	> debe redirigir output
+	<<  “<<” debe recibir un delimitador, después leer del input de la fuente actual
+		hasta que una línea que contenga solo el delimitador aparezca. Sin embargo,
+		no necesita actualizar el historial
+	“>>” debe redirigir el output en modo append.
+
+-Implementar pipes 
+-Gestionar variables de entorno
+-Gestionar  ctrl-C ctrl-D ctrl-\
+Implementar los built-ins:
+	echo (flag -n)
+	cd ruta alternativa o absoluta
+	pwd
+	export
+	unset
+	env (sin opciones o  argumentos)
+	exit
