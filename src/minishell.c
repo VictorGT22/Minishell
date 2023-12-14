@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2023/12/13 15:55:40 by vics             ###   ########.fr       */
+/*   Updated: 2023/12/14 11:04:48 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main() {
 		line = readline("$ ");
 		if ((!previous_str && line ) || (previous_str && line && ft_strcmp(previous_str, line) != 0))
 		{
-			add_history(line);
+			//add_history(line);
 			printf("Diferente a la anterior\n");
 		}
 		if (previous_str)
@@ -43,11 +43,8 @@ int main() {
 			previous_str = ft_strdup(line);
 		printf("%s", previous_str);
 		printf("La línea ingresada es: %s\n", line);
-		free(line);
 		
+		free(line);
 	}
-
-   
-	
     return 0;
 }

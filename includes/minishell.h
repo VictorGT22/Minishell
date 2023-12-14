@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2023/12/13 15:18:25 by vics             ###   ########.fr       */
+/*   Updated: 2023/12/14 11:06:04 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <limits.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
-# include "../ft_printf/includes/ft_printf.h"
-
 
 //COLORS
 
