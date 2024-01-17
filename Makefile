@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2023/12/14 11:05:51 by vics             ###   ########.fr        #
+#    Updated: 2024/01/17 12:07:24 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,15 @@ LIBFT = libft.a
 
 NSERVER = minishell
 
-SRCS =	src/minishell.c \
+SRCS =	src/minishell.c  \
+		src/get_info.c   \
 		src/colors.c
 
 OBJS = $(SRCS:.c=.o)
 
 INCLUDE = -I./
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = ## -Wall -Wextra -Werror
 
 all: makelibft $(NSERVER)
 
