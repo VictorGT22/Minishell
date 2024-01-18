@@ -4,7 +4,7 @@ int valid_chars(char n)
 {
     if (n == '\0' || n == '\n' || n == '|'
     || n == '<' || n == ';' || n == '>'
-    || n == '(' || n == ')')
+    || n == '(' || n == ')' || n == '&')
         return 1;
     return 0;
 }
@@ -15,7 +15,7 @@ int return_priority(char operator)
         return 3;
     if (operator == ';')
         return 2;
-    if (operator == '<' || operator == '>')
+    if (operator == '<' || operator == '>' || operator == '|' || operator == '&')
         return 1;
     return (-1);
 }
@@ -23,7 +23,7 @@ int return_priority(char operator)
 char *get_operator(char *string, int j)
 {
     int i = 0;
-    char *operator = malloc(sizeof(char) * 2);
+    char *operator = malloc(sizeof(char) * 3);
 
     while (valid_chars(string[j])) {
         operator[i] = string[j];

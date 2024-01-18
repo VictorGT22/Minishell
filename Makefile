@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/01/17 12:07:24 by vics             ###   ########.fr        #
+#    Updated: 2024/01/17 15:30:25 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ NSERVER = minishell
 
 SRCS =	src/minishell.c  \
 		src/get_info.c   \
+		src/input.c		 \
+		src/initialize.c \
 		src/colors.c
 
 OBJS = $(SRCS:.c=.o)
