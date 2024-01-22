@@ -14,15 +14,17 @@
 # define MINISHELL_H
 
 # include <unistd.h>
+# include <signal.h>
+# include <sys/types.h>
 # include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <linux/limits.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <linux/limits.h>
 # include "../libft/libft.h"
 
 //COLORS
@@ -44,6 +46,9 @@ int valid_chars(char n);
 int get_biggest_priority(char *string);
 char *get_operator(char *string, int j);
 
+//MANAGE SIGNALS
+void    sigintHandler(int signal);
+void    sigquitHandler(int signal);
 
 typedef struct s_info_tree {
 	char *operator;

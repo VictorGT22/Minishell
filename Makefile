@@ -19,7 +19,8 @@ SRCS =	src/minishell.c  \
 		src/get_info.c   \
 		src/input.c		 \
 		src/initialize.c \
-		src/colors.c
+		src/colors.c \
+		src/signals.c
 
 OBJS = $(SRCS:.c=.o)
 

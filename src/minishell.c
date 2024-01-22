@@ -107,6 +107,16 @@ int main() {
 	//char cwd[PATH_MAX];
 
 	previous_str = NULL;
+    if (signal(SIGINT, sigintHandler) == SIG_ERR)
+    {
+        printf ("Error al configurar el handler de SIGINT");
+        exit(EXIT_FAILURE);
+    }
+    if (signal(SIGQUIT, sigquitHandler) == SIG_ERR)
+    {
+        printf ("Error al configurar el handler de SIGQUIT");
+        exit(EXIT_FAILURE);
+    }
 	while(1)
 	{
 		line = readline(get_cwd());
