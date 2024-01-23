@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/01/17 16:54:22 by vics             ###   ########.fr       */
+/*   Updated: 2024/01/18 12:10:47 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int main() {
 		line = readline(get_cwd());
 		line_cleaned = ft_strtrim(line, " \t\n");
 		manage_history(line_cleaned, &previous_str);
-		make_binnary_tree(var, line_cleaned);
+		//make_binnary_tree(var, line_cleaned);
 		free(line);
 	}
-	clear_history();
+	rl_clear_history();
     return 0;
 }
