@@ -20,10 +20,23 @@ int return_priority(char operator)
     return (-1);
 }
 
+int len_operator(char *str, int i)
+{
+    char c = str[i];
+    int len = 0;
+    while(str[i] && str[i] == c)
+    {
+        i++;
+        len++;
+    }
+    return (len);
+}
+
 char *get_operator(char *string, int j)
 {
     int i = 0;
-    char *operator = malloc(sizeof(char) * 3);
+    int len = len_operator(string, j);
+    char *operator = malloc(sizeof(char) * len + 1);
 
     while (valid_chars(string[j])) {
         operator[i] = string[j];
@@ -37,11 +50,19 @@ char *get_operator(char *string, int j)
 int get_biggest_priority(char *string)
 {
     int i = 0;
+    char c = '\0';
     int pos = -1;
     int biggest = -1;
 
     while (string[i] != '\0') {
-        if (return_priority(string[i]) > biggest) {
+        if (string[i] == '"' || string[i] == '\'')
+        {
+            if (c)
+                c = '\0';
+            else
+                c = string[i];
+        }
+        if (return_priority(string[i]) > biggest && !c) {
             biggest = return_priority(string[i]);
             pos = i;
         }

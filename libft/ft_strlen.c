@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcatalan@student.42barcelona.com <mcata    +#+  +:+       +#+        */
+/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 20:17:53 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2023/04/02 14:14:19 by mcatalan@st      ###   ########.fr       */
+/*   Updated: 2024/01/27 22:10:13 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	ft_strlen(const char *str)
 	int	c;
 
 	c = 0;
-	while (str[c] != '\0')
-		c++;
+	if (str)
+	{
+		while (str[c] != '\0')
+			c++;
+	}
 	return (c);
 }

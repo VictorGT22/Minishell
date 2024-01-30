@@ -1,10 +1,15 @@
 #include "../includes/minishell.h"
 
-char *get_cwd()
+char *get_cwd(t_var *var)
 {
+	char *name = find_in_env(var->env, "USER")->value;
 	char cwd[PATH_MAX];	
-	char* colored_cwd = malloc(strlen(BLUE) + strlen(getcwd(cwd, sizeof(cwd))) + strlen(RESET) + 3);
-	strcpy(colored_cwd, BLUE);
+	char* colored_cwd = malloc(strlen(GREEN) + ft_strlen(name) + strlen(RESET) + strlen(BLUE) + strlen(getcwd(cwd, sizeof(cwd))) + strlen(RESET) + 4);
+	strcpy(colored_cwd, GREEN);
+	strcat(colored_cwd, name);
+	strcat(colored_cwd, RESET);
+	strcat(colored_cwd, ":");
+	strcat(colored_cwd, BLUE);
 	strcat(colored_cwd, getcwd(cwd, sizeof(cwd)));
 	strcat(colored_cwd, RESET);
 	strcat(colored_cwd, "$");
