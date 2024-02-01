@@ -11,12 +11,12 @@ void	ft_cd(t_var *var, char *params)
 
 	if (params[1])
 	{
-		if (ft_strcmp(params[1], "-") == 0 && find_in_env(var->env, "OLDPWD"))
+		/*if (ft_strcmp(params[1], "-") == 0 && find_in_env(var->env, "OLDPWD"))
 		{
 			add_in_env(var, "OLDPWD", getcwd(cwd, sizeof(cwd)));
 			chdir(find_in_env(var->env, "OLDPWD")->value);
 
-		}
+		}*/
 
 	}
 
