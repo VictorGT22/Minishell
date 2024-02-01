@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/01/27 19:31:24 by vics             ###   ########.fr       */
+/*   Updated: 2024/01/31 00:16:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
+#include <sys/wait.h>
 # include "../libft/libft.h"
 
 //COLORS
@@ -32,32 +33,28 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
+//ACTIONS
+#define NUM_ACTIONS 9
+#define EXIT "exit"
+#define ECHO "echo"
+#define PWD "pwdd"
+#define CD "cd"
+#define EXPORT "export"
+#define UNSET "unset"
+#define ENV "env"
+#define HELP "help"
 
 //ERROR MSG
 #define WRONG_OP_NL "minishell: syntax error near unexpected token 'new line'\n"
 #define WRONG_OP "minishell: syntax error near unexpected token"
 #define NO_CLOSED "minishell: syntax error no closed quote\n"
+#define NOT_FOUND "command not found\n"
 
 
-void blue(void);
-void resetColor(void);
+void 	blue(void);
+void 	resetColor(void);
 
-//INPUT
-char *get_cwd();
-void	manage_history(char *line, char **previous_str);
-
-//UTILS
-int valid_chars(char n);
-
-
-//GET INFORMATION
-int get_biggest_priority(char *string);
-char *get_operator(char *string, int j);
-
-//MANAGE SIGNALS
-void    sigintHandler(int signal);
-void    sigquitHandler(int signal);
-
+typedef struct s_var t_var;
 
 typedef struct s_info_tree {
 	char *operator;
@@ -75,9 +72,15 @@ typedef struct s_env {
 	struct s_env *next;
 } t_env;
 
+typedef struct s_actions {
+	char *action;
+	void (*function)(t_var *var, char *params);
+} t_actions;
+
 typedef struct s_var {
 	struct s_info_tree *tree;
 	struct s_env *env;
+	struct s_actions *act;
 } t_var;
 
 //INITIALIZE
@@ -88,4 +91,29 @@ t_info_tree *init_struct_tree(void);
 //ENVIROMENT
 void save_env(t_var *var, char **env);
 t_env *find_in_env(t_env *lst, char *name);
+void	add_in_env(t_var *var, char *name, char *value);
+
+//INPUT
+char 	*get_cwd();
+void	manage_history(char *line, char **previous_str);
+
+//UTILS
+int valid_chars(char n);
+
+//GET INFORMATION
+int get_biggest_priority(char *string);
+char *get_operator(char *string, int j);
+
+//MANAGE SIGNALS
+void    sigintHandler(int signal);
+void    sigquitHandler(int signal);
+
+//FUNCTION PTR
+void    save_actions(t_var *var);
+void    function_ptr(t_var *var, char **params);
+
+//ERROR
+void    stx_error(char *error_msg);
+void    exec_error(char *command, char *error_msg);
+
 #endif

@@ -39,6 +39,14 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (temp);
 }
 
+void	add_in_env(t_var *var, char *name, char *value)
+{
+	t_env *new;
+	
+	new = ft_lstnew_env(name, value);
+	ft_lstadd_back_env(&var->env, new);
+}
+
 void	ft_lstdelone_env(t_env *lst, void (*del)(void *))
 {
 	t_env	*temp;

@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/01/27 17:22:22 by vics             ###   ########.fr        #
+#    Updated: 2024/01/30 20:33:07 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS =	src/minishell.c  \
 		src/initialize.c \
 		src/colors.c 	 \
 		src/enviroment.c  \
+		src/func_ptr.c  \
 		src/signals.c
 
 OBJS = $(SRCS:.c=.o)

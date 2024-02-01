@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/01/28 00:06:56 by vics             ###   ########.fr       */
+/*   Updated: 2024/01/30 22:17:10 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char *save_sentence_l(char *string, int num)
     int i = 0;
     int j = 0;
     char *sentence = calloc((num + 100), sizeof(char));
+    char *final;
     while (valid_chars(string[i]) || string[i] == ' ')
         i++;
     while (i < num && string[i] != '\0') {
@@ -25,7 +26,9 @@ char *save_sentence_l(char *string, int num)
         j++;
     }
     sentence[i] = '\0';
-    return (sentence);
+    final = ft_strtrim(sentence, " \t\n");
+    free(sentence);
+    return (final);
 }
 
 char *save_sentence_r(char *string, int num)
@@ -33,7 +36,7 @@ char *save_sentence_r(char *string, int num)
     int i = num;
     int j = 0;
     char *sentence = calloc((strlen(string) - num + 1), sizeof(char));
-
+    char *final;
     while (string[i] && valid_chars(string[i]))
         i++;
     while (string[i] != '\0') {
@@ -42,10 +45,23 @@ char *save_sentence_r(char *string, int num)
         j++;
     }
     sentence[j] = '\0';
-    return (sentence);
+    final = ft_strtrim(sentence, " \t\n");
+    free(sentence);
+    return (final);
 }
 
-void stx_error(char *error_msg)
+void    exec_error(char *command, char *error_msg)
+{
+    int fd;
+    char *s;
+    
+    fd = dup(1);
+    dup2(2, 1);
+    printf("%s: %s", command, error_msg);
+    dup2(fd, 1);
+}
+
+void    stx_error(char *error_msg)
 {
     int fd;
     char *s;
@@ -56,7 +72,7 @@ void stx_error(char *error_msg)
     dup2(fd, 1);
 }
 
-void stx_error_op(char *error_msg, char op)
+void    stx_error_op(char *error_msg, char op)
 {
     int fd;
     char *s;
@@ -67,7 +83,7 @@ void stx_error_op(char *error_msg, char op)
     dup2(fd, 1);
 }
 
-void check_operator(t_info_tree *tree)
+void    check_operator(t_info_tree *tree)
 {
     if (ft_strlen(tree->operator) > 2)
         stx_error_op(WRONG_OP, tree->operator[0]);
@@ -142,7 +158,7 @@ char *ft_replace_strstr(char *string, int index, int len, char *replace)
     return(new);
 }
 
-void expansion(t_var *var, char *command)
+char *expansion(t_var *var, char *command)
 {
     int i = 0;
     int len = 0;
@@ -170,18 +186,18 @@ void expansion(t_var *var, char *command)
             name = malloc(sizeof(char) * len + 1);
             ft_strlcpy(name, &command[i - len], len + 1);
             env = find_in_env(var->env, name);
+            free(name);
             if (env)
                 value_str = env->value;
             command = ft_replace_strstr(command, i - len - 1, len, value_str);
             last = i - ft_strlen(value_str);
-            printf("last sigui: %d\n", last);
+            value_str = "";
         }
         len = 0;
-    }    
+    }
+    return(command);
     printf("%s\n", command);
-    //ft_remove_chr(command, '"');
 }
-
 
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
 {
@@ -191,42 +207,47 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->left = NULL;
         tree->right = NULL;
         tree->command = string;
+        ft_remove_chr(tree->command, '"');
         printf("command: %s\n", tree->command);
-        expansion(var, tree->command);
-        //printf("command final: %s\n", tree->command);
         
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
-		//printf("priority op: %s\n", tree->operator);
+		printf("priority op: %s\n", tree->operator);
         tree->left = init_linked_tree(save_sentence_l(string, j), get_operator(string, j), tree->operator);
         tree->right = init_linked_tree(save_sentence_r(string, j), get_operator(string, j), tree->operator);
         check_operator(tree);
+        ft_remove_chr(tree->left->command, '"');
 		printf("comando izquierda: %s\n", tree->left->command);
-        //expansion(var, tree->left->command);
-		printf("comando izquierda final: %s\n", tree->left->command);
+        ft_remove_chr(tree->right->command, '"');
 		printf("comando derecha: %s\n", tree->right->command);
-        //expansion(var, tree->right->command);
-		printf("comando derecha final: %s\n", tree->right->command);
         recursive_tree(var, tree->left, tree->left->command);
         recursive_tree(var, tree->right, tree->right->command);
     }
 }
 
-void recursive2(t_var *all, t_info_tree *tree)
+void recursive2(t_var *var, t_info_tree *tree)
 {
     if (tree->operator != NULL)
 	{
-		//printf("Commando izq: %s\n", tree->left->command);
-		//printf("Commando derecha: %s\n", tree->right->command);
-		//printf("operador: %s\n", tree->operator);
+		printf("..Commando izq: %s\n", tree->left->command);
+		printf("..Commando derecha: %s\n", tree->right->command);
+		printf("..operador: %s\n", tree->operator);
 	}
     if (tree->left != NULL && tree->left->left != NULL)
-        recursive2(all, tree->left);
+        recursive2(var, tree->left);
     if (tree->operator == NULL)
-		//printf("%s\n", tree->command);
+    {
+		printf("%s\n", tree->command);
+        char **params = malloc(sizeof(char *) * 3);
+        params[0] = tree->command;
+        params[1] = "";
+        params[2] = NULL;
+        
+        function_ptr(var, params);
+    }
     if (tree->right != NULL && tree->right->left != NULL)
-        recursive2(all, tree->right);
+        recursive2(var, tree->right);
 }
 
 void make_binnary_tree(t_var *var, char *line)
@@ -234,12 +255,9 @@ void make_binnary_tree(t_var *var, char *line)
     t_info_tree *tmp = init_struct_tree();
 	
     var->tree = tmp;
+    line = expansion(var, line);
     recursive_tree(var, tmp, line);
     tmp = var->tree;
-	//printf("\n\n\n");
-	//printf("%s\n", tmp->operator);
-	//printf("%s\n", tmp->left->command);
-	//printf("\n\n\n");
     recursive2(var, tmp);
 }
 
@@ -259,6 +277,7 @@ int main(int argc, char **argv, char **env) {
 		    manage_history(line_cleaned, &previous_str);
         }
 		make_binnary_tree(var, line_cleaned);
+        
 		free(line);
 	}
 	rl_clear_history();
