@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/01/31 00:16:14 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/04 18:34:07 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #define NUM_ACTIONS 9
 #define EXIT "exit"
 #define ECHO "echo"
-#define PWD "pwdd"
+#define PWD "pwd"
 #define CD "cd"
 #define EXPORT "export"
 #define UNSET "unset"
@@ -49,10 +49,17 @@
 #define WRONG_OP "minishell: syntax error near unexpected token"
 #define NO_CLOSED "minishell: syntax error no closed quote\n"
 #define NOT_FOUND "command not found\n"
+#define NO_PERM "Permission denied\n"
+#define NO_DIR "Not a directory\n"
+#define NO_EXIST "No such file or directory.\n"
 
-
-void 	blue(void);
-void 	resetColor(void);
+//COLORS
+void blue(void);
+void red(void);
+void purple(void);
+void yellow(void);
+void green(void);
+void resetColor(void);
 
 typedef struct s_var t_var;
 
@@ -74,7 +81,7 @@ typedef struct s_env {
 
 typedef struct s_actions {
 	char *action;
-	void (*function)(t_var *var, char *params);
+	void (*function)(t_var *var, char **params);
 } t_actions;
 
 typedef struct s_var {
@@ -92,6 +99,7 @@ t_info_tree *init_struct_tree(void);
 void save_env(t_var *var, char **env);
 t_env *find_in_env(t_env *lst, char *name);
 void	add_in_env(t_var *var, char *name, char *value);
+void ft_lstdelone_env(t_env **lst, t_env *todelate);
 
 //INPUT
 char 	*get_cwd();
@@ -99,6 +107,7 @@ void	manage_history(char *line, char **previous_str);
 
 //UTILS
 int valid_chars(char n);
+char *ft_strcat(char *dest, char *src);
 
 //GET INFORMATION
 int get_biggest_priority(char *string);

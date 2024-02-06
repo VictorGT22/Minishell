@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/01/30 22:17:10 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/04 19:47:10 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ char *expansion(t_var *var, char *command)
         len = 0;
     }
     return(command);
-    printf("%s\n", command);
+    //printf("%s\n", command);
 }
 
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
@@ -208,22 +208,68 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->right = NULL;
         tree->command = string;
         ft_remove_chr(tree->command, '"');
-        printf("command: %s\n", tree->command);
+        ft_remove_chr(tree->command, '\'');
+        //printf("command: %s\n", tree->command);
         
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
-		printf("priority op: %s\n", tree->operator);
+		//printf("priority op: %s\n", tree->operator);
         tree->left = init_linked_tree(save_sentence_l(string, j), get_operator(string, j), tree->operator);
         tree->right = init_linked_tree(save_sentence_r(string, j), get_operator(string, j), tree->operator);
         check_operator(tree);
         ft_remove_chr(tree->left->command, '"');
-		printf("comando izquierda: %s\n", tree->left->command);
+        ft_remove_chr(tree->left->command, '\'');
+		//printf("comando izquierda: %s\n", tree->left->command);
         ft_remove_chr(tree->right->command, '"');
-		printf("comando derecha: %s\n", tree->right->command);
+        ft_remove_chr(tree->right->command, '\'');
+		//printf("comando derecha: %s\n", tree->right->command);
         recursive_tree(var, tree->left, tree->left->command);
         recursive_tree(var, tree->right, tree->right->command);
     }
+}
+
+char *save_command(char *str)
+{
+    int i = 0;
+    char *command;
+
+    while (str[i] && str[i] != ' ')
+        i++;
+    command = malloc(sizeof(char) * i + 1);
+    i = 0;
+    while (str[i] && str[i] != ' ')
+    {
+        command[i] = str[i];
+        i++;
+    }
+    command[i] = '\0';
+    return (command);
+}
+
+char *save_params(char *str)
+{
+    int i = 0;
+    int j = 0;
+    char *param;
+
+    while (str[i] && str[i] != ' ')
+        i++;
+    if (str[i] == ' ')
+        i++;
+    j = ft_strlen(&str[i]);
+    param = malloc(sizeof(char) * j + 1);
+    j = 0;
+    while (str[i])
+    {
+        param[j] = str[i];
+        i++;
+        j++;
+    }
+    param[j] = '\0';
+    if (!param[0])
+        return (NULL);
+    return (param);
 }
 
 void recursive2(t_var *var, t_info_tree *tree)
@@ -238,12 +284,13 @@ void recursive2(t_var *var, t_info_tree *tree)
         recursive2(var, tree->left);
     if (tree->operator == NULL)
     {
-		printf("%s\n", tree->command);
+		//printf("%s\n", tree->command);
         char **params = malloc(sizeof(char *) * 3);
-        params[0] = tree->command;
-        params[1] = "";
+        params[0] = save_command(tree->command);
+        params[1] = save_params(tree->command);
         params[2] = NULL;
         
+       // printf("command:%s\nparam:#%s#\n", params[0], params[1]);
         function_ptr(var, params);
     }
     if (tree->right != NULL && tree->right->left != NULL)

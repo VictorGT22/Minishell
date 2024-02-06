@@ -39,19 +39,27 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (temp);
 }
 
-
-
-void	ft_lstdelone_env(t_env *lst, void (*del)(void *))
+void ft_lstdelone_env(t_env **lst, t_env *todelate)
 {
-	t_env	*temp;
+    if (!lst || !todelate)
+        return;
 
-	temp = lst;
-	if (!lst || !del)
-		return ;
-	lst = lst->next;
-	free(temp->name);
-	free(temp->value);
-	free(temp);
+    if (todelate == *lst)
+    {
+        *lst = todelate->next;
+        if (*lst)
+            (*lst)->prev = NULL;
+    }
+    else
+    {
+        todelate->prev->next = todelate->next;
+        if (todelate->next)
+            todelate->next->prev = todelate->prev;
+    }
+
+    free(todelate->name);
+    free(todelate->value);
+    free(todelate);
 }
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)

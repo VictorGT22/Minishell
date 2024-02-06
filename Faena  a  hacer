@@ -1,5 +1,5 @@
-- Mostrar entrada mientras se espera un comando nuevo
-- Tener un historial funcional ( haremos una linked donde cada comando que ejecuten se guarde)
+OK- Mostrar entrada mientras se espera un comando nuevo
+OK- Tener un historial funcional ( haremos una linked donde cada comando que ejecuten se guarde)
 - buscar y ejecutar el ejecutable correcto (basado en la variable PATH o mediante uso de rutas absolutas o relativas)
 - una variable Global
 - No interpretar comillas sin cerrar o caracteres especiales no especificados en el enunciado como barra invertida \ o punto y coma ;
@@ -17,12 +17,12 @@
 -Gestionar variables de entorno
 -Gestionar  ctrl-C ctrl-D ctrl-\
 Implementar los built-ins:
-	echo (flag -n)
-	cd ruta alternativa o absoluta
-	pwd
-	export
-	unset
-	env (sin opciones o  argumentos)
+	(ok)echo (flag -n)
+	(ok)cd ruta alternativa o absoluta
+	(ok)pwd
+	(ok)export
+	(ok)unset
+	(ok)env (sin opciones o  argumentos)
 	exit
 
 PASOS:
