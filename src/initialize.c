@@ -5,6 +5,7 @@ t_var *init_struct(char **env)
     t_var *var = malloc(sizeof(t_var));
     save_env(var, env);
     save_actions(var);
+    save_actions_op(var);
     return (var);
 }
 

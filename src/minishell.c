@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/04 19:47:10 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/09 18:49:14 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void    check_operator(t_info_tree *tree)
 {
     if (ft_strlen(tree->operator) > 2)
         stx_error_op(WRONG_OP, tree->operator[0]);
-    else if (tree->operator != NULL && (!tree->left->command[0] || !tree->right->command[0]))
+    else if (tree->operator != NULL && (!tree->left->command[0] && ft_strcmp(tree->operator, "<<") != 0 || !tree->right->command[0]))
         stx_error(WRONG_OP_NL);    
 }
 
@@ -188,9 +188,15 @@ char *expansion(t_var *var, char *command)
             env = find_in_env(var->env, name);
             free(name);
             if (env)
-                value_str = env->value;
+                value_str = ft_strdup(env->value);
+            else if (!ft_isalpha(command[ft_strchr_index(&command[last], '$') + 1]))
+            {
+                int index = ft_strchr_index(&command[last], '$') + 2;
+                value_str = ft_substr(command, index, len - 1);
+            }
             command = ft_replace_strstr(command, i - len - 1, len, value_str);
             last = i - ft_strlen(value_str);
+            free(value_str);
             value_str = "";
         }
         len = 0;
@@ -209,92 +215,37 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->command = string;
         ft_remove_chr(tree->command, '"');
         ft_remove_chr(tree->command, '\'');
-        //printf("command: %s\n", tree->command);
         
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
-		//printf("priority op: %s\n", tree->operator);
         tree->left = init_linked_tree(save_sentence_l(string, j), get_operator(string, j), tree->operator);
         tree->right = init_linked_tree(save_sentence_r(string, j), get_operator(string, j), tree->operator);
         check_operator(tree);
         ft_remove_chr(tree->left->command, '"');
         ft_remove_chr(tree->left->command, '\'');
-		//printf("comando izquierda: %s\n", tree->left->command);
         ft_remove_chr(tree->right->command, '"');
         ft_remove_chr(tree->right->command, '\'');
-		//printf("comando derecha: %s\n", tree->right->command);
         recursive_tree(var, tree->left, tree->left->command);
         recursive_tree(var, tree->right, tree->right->command);
     }
 }
 
-char *save_command(char *str)
-{
-    int i = 0;
-    char *command;
-
-    while (str[i] && str[i] != ' ')
-        i++;
-    command = malloc(sizeof(char) * i + 1);
-    i = 0;
-    while (str[i] && str[i] != ' ')
-    {
-        command[i] = str[i];
-        i++;
-    }
-    command[i] = '\0';
-    return (command);
-}
-
-char *save_params(char *str)
-{
-    int i = 0;
-    int j = 0;
-    char *param;
-
-    while (str[i] && str[i] != ' ')
-        i++;
-    if (str[i] == ' ')
-        i++;
-    j = ft_strlen(&str[i]);
-    param = malloc(sizeof(char) * j + 1);
-    j = 0;
-    while (str[i])
-    {
-        param[j] = str[i];
-        i++;
-        j++;
-    }
-    param[j] = '\0';
-    if (!param[0])
-        return (NULL);
-    return (param);
-}
-
 void recursive2(t_var *var, t_info_tree *tree)
 {
+    int copia_0 = dup(0);
+    int copia_1 = dup(1);
+
     if (tree->operator != NULL)
-	{
-		printf("..Commando izq: %s\n", tree->left->command);
-		printf("..Commando derecha: %s\n", tree->right->command);
-		printf("..operador: %s\n", tree->operator);
-	}
+        function_ptr_op(var, tree);
     if (tree->left != NULL && tree->left->left != NULL)
         recursive2(var, tree->left);
     if (tree->operator == NULL)
-    {
-		//printf("%s\n", tree->command);
-        char **params = malloc(sizeof(char *) * 3);
-        params[0] = save_command(tree->command);
-        params[1] = save_params(tree->command);
-        params[2] = NULL;
-        
-       // printf("command:%s\nparam:#%s#\n", params[0], params[1]);
-        function_ptr(var, params);
-    }
+        func_pipe(var, tree->command);
     if (tree->right != NULL && tree->right->left != NULL)
         recursive2(var, tree->right);
+    dup2(copia_0, 0);
+    dup2(copia_1, 1);
 }
 
 void make_binnary_tree(t_var *var, char *line)
@@ -330,17 +281,3 @@ int main(int argc, char **argv, char **env) {
 	rl_clear_history();
     return 0;
 }
-
-
- /* esto mejor si lo pones en una funcion de init_singnals por ejemplo asi el main queda mas limpio :)
-    if (signal(SIGINT, sigintHandler) == SIG_ERR)
-    {
-        printf ("Error al configurar el handler de SIGINT");
-        exit(EXIT_FAILURE);
-    }
-    if (signal(SIGQUIT, sigquitHandler) == SIG_ERR)
-    {
-        printf ("Error al configurar el handler de SIGQUIT");
-        exit(EXIT_FAILURE);
-    }
-    */

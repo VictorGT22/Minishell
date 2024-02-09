@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/04 18:34:07 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/09 17:28:16 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,23 @@ typedef struct s_actions {
 	void (*function)(t_var *var, char **params);
 } t_actions;
 
+typedef struct s_actions_op {
+	char *action;
+	void (*function)(t_var *var, t_info_tree *tree);
+} t_actions_op;
+
 typedef struct s_var {
 	struct s_info_tree *tree;
 	struct s_env *env;
 	struct s_actions *act;
+	struct s_actions_op *op;
 } t_var;
+
+typedef struct s_pipe {
+	int **pipes;
+	int save;
+	int num_pipes;
+} t_pipe;
 
 //INITIALIZE
 t_var *init_struct(char **env);
@@ -106,12 +118,14 @@ char 	*get_cwd();
 void	manage_history(char *line, char **previous_str);
 
 //UTILS
-int valid_chars(char n);
-char *ft_strcat(char *dest, char *src);
+int		valid_chars(char n);
+char	*ft_strcat(char *dest, char *src);
 
 //GET INFORMATION
-int get_biggest_priority(char *string);
-char *get_operator(char *string, int j);
+int 	get_biggest_priority(char *string);
+char	*get_operator(char *string, int j);
+char	*save_params(char *str);
+char	*save_command(char *str);
 
 //MANAGE SIGNALS
 void    sigintHandler(int signal);
@@ -121,8 +135,35 @@ void    sigquitHandler(int signal);
 void    save_actions(t_var *var);
 void    function_ptr(t_var *var, char **params);
 
+void    save_actions_op(t_var *var);
+void    function_ptr_op(t_var *var, t_info_tree *tree);
+
+void	ft_echo(t_var *var, char **params);
+void	ft_pwd(t_var *var, char **params);
+void	update_oldpwd(t_var *var, char *newpwd);
+void	change_path(t_var *var, char*param, char *path, char *old_path);
+void	ft_cd(t_var *var, char **params);
+void	print_env(t_var *var, char *str);
+void	ft_exit(t_var *var, char **params);
+char	*ft_strcat(char *dest, char *src);
+char	*find_func(char **paths, char *function);
+void	execute_action(t_var *var, char **params);
+void	ft_unset(t_var *var, char**params);
+void	ft_help(t_var *var, char **params);
+void	get_add_var_env(t_var *var, char **params, int index);
+void	ft_export(t_var *var, char **params);
+void	ft_env(t_var *var, char **params);
+void	ft_redirection_out(t_var *var, t_info_tree *tree);
+void	ft_doubleredirection_out(t_var *var, t_info_tree *tree);
+void	ft_redirection_in(t_var *var, t_info_tree *tree);
+void	ft_doubleredirection_in(t_var *var, t_info_tree *tree);
+void	ft_semicolon(t_var *var, t_info_tree *tree);
+
 //ERROR
 void    stx_error(char *error_msg);
 void    exec_error(char *command, char *error_msg);
+
+//PIPES
+int		func_pipe(t_var *var, char *command);
 
 #endif

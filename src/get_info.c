@@ -2,7 +2,7 @@
 
 int valid_chars(char n)
 {
-    if (n == '\0' || n == '\n' || n == '|'
+    if (n == '\0' || n == '\n'
     || n == '<' || n == ';' || n == '>'
     || n == '(' || n == ')' || n == '&')
         return 1;
@@ -15,7 +15,7 @@ int return_priority(char operator)
         return 3;
     if (operator == ';')
         return 2;
-    if (operator == '<' || operator == '>' || operator == '|' || operator == '&')
+    if (operator == '<' || operator == '>' || operator == '&')
         return 1;
     return (-1);
 }
@@ -69,4 +69,48 @@ int get_biggest_priority(char *string)
         i++;
     }
 	return (pos);
+}
+
+
+char *save_command(char *str)
+{
+    int i = 0;
+    char *command;
+
+    while (str[i] && str[i] != ' ')
+        i++;
+    command = malloc(sizeof(char) * i + 1);
+    i = 0;
+    while (str[i] && str[i] != ' ')
+    {
+        command[i] = str[i];
+        i++;
+    }
+    command[i] = '\0';
+    return (command);
+}
+
+char *save_params(char *str)
+{
+    int i = 0;
+    int j = 0;
+    char *param;
+
+    while (str[i] && str[i] != ' ')
+        i++;
+    if (str[i] == ' ')
+        i++;
+    j = ft_strlen(&str[i]);
+    param = malloc(sizeof(char) * j + 1);
+    j = 0;
+    while (str[i])
+    {
+        param[j] = str[i];
+        i++;
+        j++;
+    }
+    param[j] = '\0';
+    if (!param[0])
+        return (NULL);
+    return (param);
 }

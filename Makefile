@@ -6,7 +6,7 @@
 #    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/01/30 20:33:07 by vics             ###   ########.fr        #
+#    Updated: 2024/02/09 17:26:25 by vics             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,18 @@ LIBFT = libft.a
 
 NSERVER = minishell
 
-SRCS =	src/minishell.c  \
-		src/get_info.c   \
-		src/input.c		 \
-		src/initialize.c \
-		src/colors.c 	 \
-		src/enviroment.c  \
-		src/func_ptr.c  \
+SRCS =	src/minishell.c  	\
+		src/get_info.c   	\
+		src/input.c		 	\
+		src/initialize.c 	\
+		src/colors.c 	 	\
+		src/enviroment.c  	\
+		src/func_ptr/func_ptr.c  	\
+		src/func_ptr/func_ptr2.c  	\
+		src/func_ptr/func_ptr3.c  	\
+		src/func_ptr/func_ptr4.c  	\
+		src/func_ptr/func_selector.c  	\
+		src/pipes.c			\
 		src/signals.c
 
 OBJS = $(SRCS:.c=.o)
