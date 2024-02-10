@@ -4,7 +4,8 @@ void	ft_echo(t_var *var, char **params)
 {
 	int index_dash;
 	int index_end;
-	char *flag = "";
+	char *flag = NULL;
+	char *temp;
 	char *str = "";
 
 	if (params[1])
@@ -16,19 +17,19 @@ void	ft_echo(t_var *var, char **params)
 		if (index_dash != -1)
 		{
 			flag = ft_substr(params[1], index_dash, index_end);
-			str = ft_strtrim(ft_substr(params[1], index_end, ft_strlen(params[1])), " \t");
+			temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
+			str = ft_strtrim(temp ," \t");
 			printf("%s", str);
 			free(str);
+			free(temp);
 		}
 		else
 			printf("%s", params[1]);
-		if (index_dash != -1 && ft_strcmp(flag, "-n") == 0)
-			free(flag);
-		else
-			printf("\n");	
 	}
-	else
+	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
 		printf("\n");
+	if (flag)
+		free(flag);
 }
 
 void	ft_redirection_out(t_var *var, t_info_tree *tree)

@@ -4,6 +4,7 @@ void	ft_exit(t_var *var, char **params)
 {
 	//HACER TODOS LOS FREES
 	printf("exit\n");
+	func_exit(var);
 	exit(0); //cambiar 0 por exit code
 }
 
@@ -27,6 +28,13 @@ char *ft_strcat(char *dest, char *src)
     return (temp);
 }
 
+char *ft_newold(char *new, char *old)
+{
+	free(old);
+	return (new);
+}
+
+
 char *find_func(char **paths, char *function)
 {
     char *temp = NULL;
@@ -37,8 +45,8 @@ char *find_func(char **paths, char *function)
         temp = malloc(sizeof(char) * (ft_strlen(paths[i])
         + ft_strlen(function)) + 2);
         ft_memset(temp, '\0', (ft_strlen(paths[i]) + ft_strlen(function)) + 2);
-        temp = ft_strcat(paths[i], "/");
-        temp = ft_strcat(temp, function);
+        temp = ft_newold(ft_strcat(paths[i], "/"), temp);
+        temp = ft_newold(ft_strcat(temp, function), temp);
         fd = access(temp, F_OK);
         if (fd != -1)
             return (temp);
@@ -71,6 +79,9 @@ void	execute_action(t_var *var, char **params)
         exit(0);
     } else {
         wait(NULL);
+		free_arr(path);
+		free(execution_path);
         return;
     }
+	
 }

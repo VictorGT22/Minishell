@@ -97,8 +97,9 @@ void save_env(t_var *var, char **env)
     while (env[i])
 	{
 		arr = ft_split(env[i], '=');
-		new = ft_lstnew_env(arr[0], arr[1]);
+		new = ft_lstnew_env(ft_strdup(arr[0]), ft_strdup(arr[1]));
 		ft_lstadd_back_env(&var->env, new);
+		free_arr(arr);
 		i++;
 	}
 }

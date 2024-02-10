@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/09 17:28:16 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/10 00:52:02 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,13 @@ void	manage_history(char *line, char **previous_str);
 //UTILS
 int		valid_chars(char n);
 char	*ft_strcat(char *dest, char *src);
+void    func_exit(t_var *var);
+char *ft_newold(char *new, char *old);
+
+
+//FREE
+void	free_arr(char **arr);
+void free_binnarytree(t_info_tree *tree);
 
 //GET INFORMATION
 int 	get_biggest_priority(char *string);

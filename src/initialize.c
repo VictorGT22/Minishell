@@ -15,12 +15,12 @@ t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op)
 
     if (file == NULL)
         perror("error\n");
-    file->operator = strdup(operator);
-    file->command = strdup(command);
-    file->prev_operator = NULL;
-    if (prev_op != NULL)
-        file->prev_operator = strdup(prev_op);
-    file->checked = 0;
+    file->operator = operator;
+    file->command = command;
+    //file->prev_operator = NULL;
+    //if (prev_op != NULL)
+     //   file->prev_operator = strdup(prev_op);
+    //file->checked = 0;
     file->right = NULL;
     file->left = NULL;
     return file;

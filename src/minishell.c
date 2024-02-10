@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/09 18:49:14 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/10 00:59:32 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,6 @@ char *expansion(t_var *var, char *command)
         len = 0;
     }
     return(command);
-    //printf("%s\n", command);
 }
 
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
@@ -212,6 +211,7 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
     if (j == -1) {
         tree->left = NULL;
         tree->right = NULL;
+        tree->operator = NULL;
         tree->command = string;
         ft_remove_chr(tree->command, '"');
         ft_remove_chr(tree->command, '\'');
@@ -219,8 +219,8 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
-        tree->left = init_linked_tree(save_sentence_l(string, j), get_operator(string, j), tree->operator);
-        tree->right = init_linked_tree(save_sentence_r(string, j), get_operator(string, j), tree->operator);
+        tree->left = init_linked_tree(save_sentence_l(string, j), tree->operator, tree->operator);
+        tree->right = init_linked_tree(save_sentence_r(string, j), tree->operator, tree->operator);
         check_operator(tree);
         ft_remove_chr(tree->left->command, '"');
         ft_remove_chr(tree->left->command, '\'');
@@ -257,27 +257,70 @@ void make_binnary_tree(t_var *var, char *line)
     recursive_tree(var, tmp, line);
     tmp = var->tree;
     recursive2(var, tmp);
+    tmp = var->tree;
+    free_binnarytree(tmp);
+}
+
+void free_lst(t_env* head) {
+    t_env* current = head;
+    t_env* next;
+
+    while (current != NULL) {
+        next = current->next;
+        free(current->name);
+        free(current->value);
+        free(current);
+        current = next;
+    }
+}
+
+void free_binnarytree(t_info_tree *tree)
+{
+    if (!tree)
+        return;
+    free_binnarytree(tree->left);
+    free_binnarytree(tree->right);
+
+    if (tree->command)
+        free(tree->command);
+    if (tree->operator)
+        free(tree->operator);
+    free(tree);
+}
+
+void    func_exit(t_var *var)
+{
+    free_lst(var->env);
+    free(var->act);
+    free(var->op);
+    free(var);
 }
 
 int main(int argc, char **argv, char **env) {
-    char *line;
+    char *line = NULL;
 	char *line_cleaned;
 	char *previous_str;
+    char *path;
     t_var *var = init_struct(env);
     previous_str = NULL;
    
-	while(1)
+	 while(1)
 	{
-		line = readline(get_cwd(var));
+        path = get_cwd(var);
+		line = readline(path);
+        line_cleaned = NULL;
+        free(path);
         if (line && line[0] != '\0')
         {
 		    line_cleaned = ft_strtrim(line, " \t\n");
 		    manage_history(line_cleaned, &previous_str);
         }
 		make_binnary_tree(var, line_cleaned);
-        
 		free(line);
 	}
+    if (previous_str)
+        free(previous_str);
 	rl_clear_history();
+    func_exit(var);
     return 0;
 }
