@@ -9,7 +9,7 @@ void	ft_unset(t_var *var, char**params)
 	if (params[1])
 	{
 		index = ft_strchr_index(params[1], '=');
-		name = name = ft_substr(params[1], 0, index);
+		name = ft_substr(params[1], 0, index);
 		env_name = find_in_env(var->env, name);
 		if (env_name)
 			ft_lstdelone_env(&var->env, env_name);
