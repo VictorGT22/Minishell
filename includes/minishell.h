@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/10 17:03:13 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/22 11:02:57 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 #define NO_PERM "Permission denied\n"
 #define NO_DIR "Not a directory\n"
 #define NO_EXIST "No such file or directory.\n"
-
+#define NO_FORK "Error. Fork no created\n"
 //COLORS
 void blue(void);
 void red(void);
@@ -136,7 +136,7 @@ char	*get_operator(char *string, int j);
 char	*save_params(char *str);
 char	*save_command(char *str);
 
-//MANAGE SIGNALS
+//SIGNALS
 void    sigintHandler(int signus);
 void    sigquitHandler(int signus);
 void	init_signals(void);
