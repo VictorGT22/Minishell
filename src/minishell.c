@@ -6,19 +6,20 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/22 11:13:53 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/23 23:17:13 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **env) {
-    char *line = NULL;
+int	init_shell(char **argv, char **env)
+{
+    (void)argv;
+	char *line = NULL;
 	char *line_cleaned;
 	char *previous_str;
     char *path;
-    (void)argc;
-    (void)argv;
+	
     t_var *var = init_struct(env);
     previous_str = NULL;
    
@@ -42,4 +43,17 @@ int main(int argc, char **argv, char **env) {
 	rl_clear_history();
     func_exit(var);
     return 0;
+}
+
+int main(int argc, char **argv, char **env) 
+{
+    int	status;
+	(void)argv;
+	
+	status = 0;
+	if (argc == 1)
+	{
+		init_shell(argv, env);
+	}
+	return (status);
 }

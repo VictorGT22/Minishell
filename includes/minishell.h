@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/22 11:02:57 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/23 23:07:32 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_pipe {
 } t_pipe;
 
 //INITIALIZE
+int	init_shell(char **argv, char **env);
 t_var *init_struct(char **env);
 t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree *init_struct_tree(void);
@@ -125,10 +126,18 @@ char	*ft_strcat(char *dest, char *src);
 void    func_exit(t_var *var);
 char 	*ft_newold(char *new, char *old);
 
+//TREE OPERATIONS
+bool	ft_replace_chrchr(char *str, char find, char replace);
+char 	*ft_replace_strstr(char *string, int index, int len, char *replace);
+void	ft_remove_chr(char *str, char find);
+char *save_sentence_r(char *string, int num);
+char *save_sentence_l(char *string, int num);
+void    check_operator(t_info_tree *tree);
 
 //FREE
 void	free_arr(char **arr);
 void 	free_binnarytree(t_info_tree *tree);
+void 	make_binnary_tree(t_var *var, char *line);
 
 //GET INFORMATION
 int 	get_biggest_priority(char *string);
@@ -172,6 +181,7 @@ void	ft_semicolon(t_var *var, t_info_tree *tree);
 //ERROR
 void    stx_error(char *error_msg);
 void    exec_error(char *command, char *error_msg);
+void    stx_error_op(char *error_msg, char op);
 
 //PIPES
 int		func_pipe(t_var *var, char *command);
