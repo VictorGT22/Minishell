@@ -11,6 +11,7 @@ t_var *init_struct(char **env)
 
 t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op)
 {
+    (void)prev_op;
     t_info_tree *file = malloc(sizeof(t_info_tree) * 1);
 
     if (file == NULL)

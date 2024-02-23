@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/10 00:52:02 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/10 17:03:13 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <linux/limits.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
+# include <limits.h>
 #include <sys/wait.h>
 # include "../libft/libft.h"
+# include "../readline/readline.h"
+# include "../readline/history.h"
 
 //COLORS
 #define BLUE "\033[0;34m"
@@ -108,10 +110,10 @@ t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree *init_struct_tree(void);
 
 //ENVIROMENT
-void save_env(t_var *var, char **env);
-t_env *find_in_env(t_env *lst, char *name);
+void 	save_env(t_var *var, char **env);
+t_env 	*find_in_env(t_env *lst, char *name);
 void	add_in_env(t_var *var, char *name, char *value);
-void ft_lstdelone_env(t_env **lst, t_env *todelate);
+void 	ft_lstdelone_env(t_env **lst, t_env *todelate);
 
 //INPUT
 char 	*get_cwd();
@@ -121,12 +123,12 @@ void	manage_history(char *line, char **previous_str);
 int		valid_chars(char n);
 char	*ft_strcat(char *dest, char *src);
 void    func_exit(t_var *var);
-char *ft_newold(char *new, char *old);
+char 	*ft_newold(char *new, char *old);
 
 
 //FREE
 void	free_arr(char **arr);
-void free_binnarytree(t_info_tree *tree);
+void 	free_binnarytree(t_info_tree *tree);
 
 //GET INFORMATION
 int 	get_biggest_priority(char *string);
@@ -135,8 +137,9 @@ char	*save_params(char *str);
 char	*save_command(char *str);
 
 //MANAGE SIGNALS
-void    sigintHandler(int signal);
-void    sigquitHandler(int signal);
+void    sigintHandler(int signus);
+void    sigquitHandler(int signus);
+void	init_signals(void);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);

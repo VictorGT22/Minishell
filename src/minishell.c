@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/10 00:59:32 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/10 16:11:29 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char *save_sentence_r(char *string, int num)
 void    exec_error(char *command, char *error_msg)
 {
     int fd;
-    char *s;
+    //char *s;
     
     fd = dup(1);
     dup2(2, 1);
@@ -64,7 +64,7 @@ void    exec_error(char *command, char *error_msg)
 void    stx_error(char *error_msg)
 {
     int fd;
-    char *s;
+    //char *s;
     
     fd = dup(1);
     dup2(2, 1);
@@ -75,7 +75,7 @@ void    stx_error(char *error_msg)
 void    stx_error_op(char *error_msg, char op)
 {
     int fd;
-    char *s;
+    //char *s;
     
     fd = dup(1);
     dup2(2, 1);
@@ -87,7 +87,7 @@ void    check_operator(t_info_tree *tree)
 {
     if (ft_strlen(tree->operator) > 2)
         stx_error_op(WRONG_OP, tree->operator[0]);
-    else if (tree->operator != NULL && (!tree->left->command[0] && ft_strcmp(tree->operator, "<<") != 0 || !tree->right->command[0]))
+    else if (tree->operator != NULL && ((!tree->left->command[0] && ft_strcmp(tree->operator, "<<") != 0) || !tree->right->command[0]))
         stx_error(WRONG_OP_NL);    
 }
 
@@ -301,8 +301,11 @@ int main(int argc, char **argv, char **env) {
 	char *line_cleaned;
 	char *previous_str;
     char *path;
+    (void)argc;
+    (void)argv;
     t_var *var = init_struct(env);
     previous_str = NULL;
+    init_signals();
    
 	 while(1)
 	{
