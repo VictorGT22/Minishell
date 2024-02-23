@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/23 23:17:13 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/23 23:29:08 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	init_shell(char **argv, char **env)
 	char *line_cleaned;
 	char *previous_str;
     char *path;
-	
+    (void)argc;
+    (void)argv;
     t_var *var = init_struct(env);
     previous_str = NULL;
    
@@ -28,6 +29,7 @@ int	init_shell(char **argv, char **env)
         path = get_cwd(var);
 		line = readline(path);
         line_cleaned = NULL;
+        init_signals(READ);
         free(path);
         init_signals();
         if (line && line[0] != '\0')
@@ -35,6 +37,7 @@ int	init_shell(char **argv, char **env)
 		    line_cleaned = ft_strtrim(line, " \t\n");
 		    manage_history(line_cleaned, &previous_str);
         }
+        signal(SIGINT, SIG_IGN);
 		make_binnary_tree(var, line_cleaned);
 		free(line);
 	}

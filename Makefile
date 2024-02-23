@@ -6,7 +6,7 @@
 #    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/02/23 23:10:44 by mac              ###   ########.fr        #
+#    Updated: 2024/02/23 23:29:21 by mac              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@
 # MACOS
 # Print MINISHELL and authors' names
 MINISHELL_MSG = MINISHELL
-AUTHORS_MSG = by Victor & Oscar
+AUTHORS_MSG = by jpaul-kr & mcatalan
 MESSAGE_LEN = $$(($(shell echo $(MINISHELL_MSG) | wc -c) - 1))
 
 PRINT_MINISHELL = @printf "$(VIOLET)%*s$(RESET)\n" $(MESSAGE_LEN) $(MINISHELL_MSG)

@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/23 23:07:32 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/23 23:28:55 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 #define BLUE "\033[0;34m"
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
+
+//SIGNAL MODES
+# define READ		1
+# define HEREDOC	2
+# define EXEC		3
+
+//GLOBAL VARIABLES
+int	g_exit_sig;
 
 //ACTIONS
 #define NUM_ACTIONS 9
@@ -148,7 +156,7 @@ char	*save_command(char *str);
 //SIGNALS
 void    sigintHandler(int signus);
 void    sigquitHandler(int signus);
-void	init_signals(void);
+void	init_signals(int mode);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);
