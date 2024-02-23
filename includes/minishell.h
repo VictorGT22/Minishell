@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/10 17:03:13 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/23 23:28:55 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
+//SIGNAL MODES
+# define READ		1
+# define HEREDOC	2
+# define EXEC		3
+
+//GLOBAL VARIABLES
+int	g_exit_sig;
+
 //ACTIONS
 #define NUM_ACTIONS 9
 #define EXIT "exit"
@@ -54,7 +62,7 @@
 #define NO_PERM "Permission denied\n"
 #define NO_DIR "Not a directory\n"
 #define NO_EXIST "No such file or directory.\n"
-
+#define NO_FORK "Error. Fork no created\n"
 //COLORS
 void blue(void);
 void red(void);
@@ -105,6 +113,7 @@ typedef struct s_pipe {
 } t_pipe;
 
 //INITIALIZE
+int	init_shell(char **argv, char **env);
 t_var *init_struct(char **env);
 t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree *init_struct_tree(void);
@@ -125,10 +134,18 @@ char	*ft_strcat(char *dest, char *src);
 void    func_exit(t_var *var);
 char 	*ft_newold(char *new, char *old);
 
+//TREE OPERATIONS
+bool	ft_replace_chrchr(char *str, char find, char replace);
+char 	*ft_replace_strstr(char *string, int index, int len, char *replace);
+void	ft_remove_chr(char *str, char find);
+char *save_sentence_r(char *string, int num);
+char *save_sentence_l(char *string, int num);
+void    check_operator(t_info_tree *tree);
 
 //FREE
 void	free_arr(char **arr);
 void 	free_binnarytree(t_info_tree *tree);
+void 	make_binnary_tree(t_var *var, char *line);
 
 //GET INFORMATION
 int 	get_biggest_priority(char *string);
@@ -136,10 +153,10 @@ char	*get_operator(char *string, int j);
 char	*save_params(char *str);
 char	*save_command(char *str);
 
-//MANAGE SIGNALS
+//SIGNALS
 void    sigintHandler(int signus);
 void    sigquitHandler(int signus);
-void	init_signals(void);
+void	init_signals(int mode);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);
@@ -172,6 +189,7 @@ void	ft_semicolon(t_var *var, t_info_tree *tree);
 //ERROR
 void    stx_error(char *error_msg);
 void    exec_error(char *command, char *error_msg);
+void    stx_error_op(char *error_msg, char op);
 
 //PIPES
 int		func_pipe(t_var *var, char *command);
