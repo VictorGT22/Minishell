@@ -6,7 +6,7 @@
 #    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/02/23 23:29:21 by mac              ###   ########.fr        #
+#    Updated: 2024/02/24 10:23:22 by mac              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ DEPS = $(SRCS:.c=.d)
 
 INCLUDE = -I./
 RM = rm -f
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -g #-Wall -Wextra -Werror
 OFLAGS = -g -fsanitize=address
 
 all: print_message libft readline $(NAME)
