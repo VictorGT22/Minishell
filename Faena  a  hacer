@@ -1,28 +1,28 @@
-OK- Mostrar entrada mientras se espera un comando nuevo
-OK- Tener un historial funcional ( haremos una linked donde cada comando que ejecuten se guarde)
-- buscar y ejecutar el ejecutable correcto (basado en la variable PATH o mediante uso de rutas absolutas o relativas)
-- una variable Global
+✅- Mostrar entrada mientras se espera un comando nuevo
+✅- Tener un historial funcional ( haremos una linked donde cada comando que ejecuten se guarde)
+- Buscar y ejecutar el ejecutable correcto (basado en la variable PATH o mediante uso de rutas absolutas o relativas)
+- Una variable Global
 - No interpretar comillas sin cerrar o caracteres especiales no especificados en el enunciado como barra invertida \ o punto y coma ;
 - Gestionar que la ' evite que el shell intercepte los metacaracteres en la secuencia entrecomiullada (no entiendo esto)
 - Gestionar que la " evite que el shell interprete los metacaracteres en la secuencia entreencomillada exceptuando $ 
-- Implementar redericciones: 
-	"<" debe rederigir input
-	">" debe redirigir output
-	“<<” debe recibir un delimitador, después leer del input de la fuente actual
+✅- Implementar redirecciones: 
+	(✅)"<" debe rederigir input
+	(✅)">" debe redirigir output
+	(✅)“<<” debe recibir un delimitador, después leer del input de la fuente actual
 		hasta que una línea que contenga solo el delimitador aparezca. Sin embargo,
 		no necesita actualizar el historial
-	“>>” debe redirigir el output en modo append.
+	(✅)“>>” debe redirigir el output en modo append.
 
--Implementar pipes 
--Gestionar variables de entorno
+	✅-Implementar pipes 
+	✅-Gestionar variables de entorno
 -Gestionar  ctrl-C ctrl-D ctrl-\
-Implementar los built-ins:
-	(ok)echo (flag -n)
-	(ok)cd ruta alternativa o absoluta
-	(ok)pwd
-	(ok)export
-	(ok)unset
-	(ok)env (sin opciones o  argumentos)
+✅Implementar los built-ins:
+	(✅)echo (flag -n)
+	(✅)cd ruta alternativa o absoluta
+	(✅)pwd
+	(✅)export
+	(✅)unset
+	(✅)env (sin opciones o  argumentos)
 	exit
 
 PASOS:
@@ -42,100 +42,144 @@ Funciones:
 https://03-jon-perez.gitbook.io/coding-library/c/readline
 
 readline:
-	will read a line from the terminal and return it, using
-    prompt as a prompt.  If prompt is NULL or the empty string, no
-    prompt is issued.  The line returned is allocated with malloc(3);
-    the caller must free it when finished.  The line returned has the
-    final newline removed, so only the text of the line remains.
+    char *readline(const char *prompt);
+
+    Leerá una línea desde el terminal y la devolverá, utilizando
+    prompt como un indicador. Si prompt es NULL o una cadena vacía, no
+    se emitirá ningún indicador. La línea devuelta se asigna con malloc(3);
+    el llamador debe liberarla cuando haya terminado. La línea devuelta tiene el
+    carácter de nueva línea final eliminado, por lo que solo queda el texto de la línea.
 
 rl_clear_history:
-	es una función proporcionada por la biblioteca GNU Readline que permite limpiar todas las líneas almacenadas en el historial.
-	Esta función no requiere ningún parámetro y no devuelve ningún valor.
+    void rl_clear_history(void);
+
+    Es una función proporcionada por la biblioteca GNU Readline que permite limpiar todas las líneas almacenadas en el historial.
+    Esta función no requiere ningún parámetro y no devuelve ningún valor.
 
 rl_on_new_line:
-	se llama después de que el usuario ingresa un comando y se imprime en pantalla. 
-	Esto indica al sistema que se ha movido a una nueva línea vacía y permite que el sistema actualice su estado 
-	interno para el próximo comando del usuario. Sin embargo, es importante tener en cuenta que esta función no ejecuta ninguna 
-	acción específica, sólo indica al sistema que se ha movido a una nueva línea vacía.
+    void rl_on_new_line(void);
+
+    Se llama después de que el usuario ingrese un comando y se imprima en pantalla.
+    Esto indica al sistema que se ha movido a una nueva línea vacía y permite que el sistema actualice su estado
+    interno para el próximo comando del usuario. Sin embargo, es importante tener en cuenta que esta función no ejecuta ninguna
+    acción específica, solo indica al sistema que se ha movido a una nueva línea vacía.
 
 rl_replace_line:
-	funciona reemplazando el contenido actual de la línea de comandos con la cadena de texto especificada en el argumento string.
-	Si se especifica 1 en el argumento clear_undo, el historial de deshacer se limpia automáticamente al reemplazar la línea de comandos.
-	Si se especifica 0, el historial de deshacer no se limpia.
+    void rl_replace_line(const char *text, int clear_undo);
+
+    Funciona reemplazando el contenido actual de la línea de comandos con la cadena de texto especificada en el argumento text.
+    Si se especifica 1 en el argumento clear_undo, el historial de deshacer se limpia automáticamente al reemplazar la línea de comandos.
+    Si se especifica 0, el historial de deshacer no se limpia.
 
 rl_redisplay:
-	Se utiliza después de haber realizado cambios en la línea de entrada mediante otras funciones de la biblioteca readline,
-	como rl_replace_line(). Sin llamar a esta función, los cambios realizados en la línea de entrada no se mostrarían en pantalla.
+    void rl_redisplay(void);
 
-add_history: 
-	add_history() se utiliza para agregar una línea al historial, esta línea se agrega al final del historial
-	y se convierte en la línea actual. Esto es útil cuando el usuario desea agregar una línea al historial después
-	de haber utilizado readline() o cuando se quieren agregar líneas de forma programática al historial. Es importante
-	tener en cuenta que esta función no afecta al archivo de historial, si se tiene un archivo de historial configurado
-	sigue existiendo.
+    Se utiliza después de haber realizado cambios en la línea de entrada mediante otras funciones de la biblioteca readline,
+    como rl_replace_line(). Sin llamar a esta función, los cambios realizados en la línea de entrada no se mostrarían en pantalla.
+
+add_history:
+    void add_history(const char *line);
+
+    add_history() se utiliza para agregar una línea al historial; esta línea se agrega al final del historial
+    y se convierte en la línea actual. Esto es útil cuando el usuario desea agregar una línea al historial después
+    de haber utilizado readline() o cuando se quieren agregar líneas de forma programática al historial. Es importante
+    tener en cuenta que esta función no afecta al archivo de historial; si se tiene un archivo de historial configurado,
+    seguirá existiendo.
 
 access:
-	access() checks whether the calling process can access the file pathname. If pathname is a symbolic link, it is dereferenced.
-		int access(const char *pathname, int mode);
-		modes: to be performed, and is either the value F_OK, or a mask consisting of the bitwise OR of one or more of R_OK, W_OK, and X_OK.
-		F_OK tests for the existence of the file. R_OK, W_OK, and X_OK test whether the file exists and grants read, write, and execute permissions, respectively.
+    int access(const char *pathname, int mode);
 
-fork: 	Fork system call is used for creating a new process in Linux, and Unix systems, which is called the child process,
-		which runs concurrently with the process that makes the fork() call (parent process). After a new child process is created,
-		both processes will execute the next instruction following the fork() system call.
+    access() verifica si el proceso que llama puede acceder al archivo pathname. Si pathname es un enlace simbólico, se desreferencia.
+    Los modos pueden ser el valor F_OK, o una máscara que consiste en el OR bitwise de uno o más de R_OK, W_OK, y X_OK.
+    F_OK verifica la existencia del archivo. R_OK, W_OK, y X_OK verifican si el archivo existe y concede permisos de lectura, escritura y ejecución, respectivamente.
 
+fork:
+    pid_t fork(void);
 
-getcwd: returns the name of the current working directory
+    La llamada al sistema fork se utiliza para crear un nuevo proceso en sistemas Linux y Unix, que se llama proceso hijo,
+    que se ejecuta concurrentemente con el proceso que realiza la llamada fork() (proceso padre). Después de que se crea un nuevo proceso hijo,
+    ambos procesos ejecutarán la siguiente instrucción siguiente a la llamada al sistema fork().
 
+getcwd:
+    char *getcwd(char *buf, size_t size);
 
-chdir: 
-	is system function (system call) that is used to change the current working directory. On some systems, this command is
-	used as an alias for the shell command cd. chdir changes the current working directory of the calling process to the directory specified in path. 
+    Retorna el nombre del directorio de trabajo actual.
 
-stat: 
-	obtains information about the file or directory referenced in path.
+chdir:
+    int chdir(const char *path);
 
+    Es una función del sistema (llamada al sistema) que se utiliza para cambiar el directorio de trabajo actual. En algunos sistemas, este comando se
+    utiliza como un alias para el comando del shell cd. chdir cambia el directorio de trabajo actual del proceso que llama al directorio especificado en la ruta.
 
-unlink: deletes a name from the filesystem.  If that name was
-       the last link to a file and no processes have the file open, the
-       file is deleted and the space it was using is made available for
-       reuse.
+stat:
+    int stat(const char *path, struct stat *buf);
+
+    Obtiene información sobre el archivo o directorio referenciado en la ruta.
+
+unlink:
+    int unlink(const char *pathname);
+
+    Elimina un nombre del sistema de archivos. Si ese nombre era
+    el último enlace a un archivo y ningún proceso tiene el archivo abierto, el
+    archivo se elimina y el espacio que ocupaba está disponible para
+    reutilización.
 
 execve:
-	executes the program referred to by pathname.  This
-    causes the program that is currently being run by the calling
-    process to be replaced with a new program, with newly initialized
-    stack, heap, and (initialized and uninitialized) data segments.
+    int execve(const char *pathname, char *const argv[], char *const envp[]);
+
+    Ejecuta el programa al que se refiere la ruta. Esto
+    provoca que el programa que se está ejecutando actualmente por el proceso que llama
+    sea reemplazado por un nuevo programa, con una pila, montón y datos
+    segmentos (inicializados y no inicializados) recién inicializados.
 
 dup:
+    int dup(int oldfd);
 
+    Duplica un descriptor de archivo.
 
 dup2:
+    int dup2(int oldfd, int newfd);
 
-
+    Duplica un descriptor de archivo a otro descriptor de archivo.
 
 strerror:
+    char *strerror(int errnum);
 
+    Convierte un número de error en una cadena de caracteres legible.
 
 perror:
+    void perror(const char *s);
 
+    Imprime un mensaje de error seguido de la cadena de error asociada.
 
 isatty:
+    int isatty(int fd);
 
+    Verifica si un descriptor de archivo se asocia con un terminal.
 
 ttyname:
+    char *ttyname(int fd);
 
+    Devuelve el nombre del terminal asociado con el descriptor de archivo.
 
 getenv:
+    char *getenv(const char *name);
 
+    Obtiene el valor de una variable de entorno.
 
 opendir:
-	unction shall open a directory stream corresponding to the directory named by the dirname argument. The directory stream is positioned at the first entry.
-	If the type DIR is implemented using a file descriptor, applications shall only be able to open up to a total of {OPEN_MAX} files and directories.
+    DIR *opendir(const char *dirname);
+
+    La función abre un flujo de directorio correspondiente al directorio nombrado por el argumento dirname. El flujo de directorio se posiciona en la primera entrada.
+    Si el tipo DIR se implementa utilizando un descriptor de archivo, las aplicaciones solo podrán abrir un total de {OPEN_MAX} archivos y directorios.
 
 readdir:
-	function returns a pointer to a dirent structure
-       representing the next directory entry in the directory stream
-       pointed to by dirp.  It returns NULL on reaching the end of the
-       directory stream or if an error occurred.
+    struct dirent *readdir(DIR *dirp);
+
+    La función devuelve un puntero a una estructura dirent
+    que representa la siguiente entrada de directorio en el flujo de directorio
+    apuntado por dirp. Devuelve NULL al alcanzar el final del
+    flujo de directorio o si ocurrió un error.
+
+
 
