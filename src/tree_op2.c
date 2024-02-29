@@ -74,6 +74,9 @@ void	ft_remove_chr(char *str, char find)
 	i = 0;
     j = 0;
 	n = false;
+
+    if (str == NULL)
+        return;
 	while (str[i])
 	{
 		if (str[i] == find)

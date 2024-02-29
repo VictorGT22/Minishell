@@ -48,6 +48,9 @@ char *expansion(t_var *var, char *command)
 
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
 {
+    if (string == NULL || tree == NULL)
+        return;
+    
     int j = get_biggest_priority(string);
 
     if (j == -1) {
