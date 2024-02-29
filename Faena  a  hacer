@@ -91,7 +91,8 @@ access:
 
     access() verifica si el proceso que llama puede acceder al archivo pathname. Si pathname es un enlace simbólico, se desreferencia.
     Los modos pueden ser el valor F_OK, o una máscara que consiste en el OR bitwise de uno o más de R_OK, W_OK, y X_OK.
-    F_OK verifica la existencia del archivo. R_OK, W_OK, y X_OK verifican si el archivo existe y concede permisos de lectura, escritura y ejecución, respectivamente.
+    F_OK verifica la existencia del archivo. R_OK, W_OK, y X_OK verifican si el archivo existe y concede permisos de lectura, 
+    escritura y ejecución, respectivamente.
 
 fork:
     pid_t fork(void);
@@ -108,8 +109,9 @@ getcwd:
 chdir:
     int chdir(const char *path);
 
-    Es una función del sistema (llamada al sistema) que se utiliza para cambiar el directorio de trabajo actual. En algunos sistemas, este comando se
-    utiliza como un alias para el comando del shell cd. chdir cambia el directorio de trabajo actual del proceso que llama al directorio especificado en la ruta.
+    Es una función del sistema (llamada al sistema) que se utiliza para cambiar el directorio de trabajo actual. 
+    En algunos sistemas, este comando se utiliza como un alias para el comando del shell cd. chdir cambia el 
+    directorio de trabajo actual del proceso que llama al directorio especificado en la ruta.
 
 stat:
     int stat(const char *path, struct stat *buf);

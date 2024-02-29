@@ -6,13 +6,13 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/24 17:47:44 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/29 10:13:58 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	init_shell(char **argv, char **env)
+int	init_loop(char **argv, char **env)
 {
     (void)argv;
 	char *line = NULL;
@@ -53,7 +53,7 @@ int main(int argc, char **argv, char **env)
 	status = 0;
 	if (argc == 1)
 	{
-		init_shell(argv, env);
+		init_loop(argv, env);
 	}
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/23 23:28:55 by mac              ###   ########.fr       */
+/*   Updated: 2024/02/29 09:46:36 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/signal.h>
 # include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -113,7 +114,7 @@ typedef struct s_pipe {
 } t_pipe;
 
 //INITIALIZE
-int	init_shell(char **argv, char **env);
+int	init_loop(char **argv, char **env);
 t_var *init_struct(char **env);
 t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree *init_struct_tree(void);
@@ -125,7 +126,7 @@ void	add_in_env(t_var *var, char *name, char *value);
 void 	ft_lstdelone_env(t_env **lst, t_env *todelate);
 
 //INPUT
-char 	*get_cwd();
+char 	*get_cwd(t_var *var);
 void	manage_history(char *line, char **previous_str);
 
 //UTILS
@@ -154,8 +155,9 @@ char	*save_params(char *str);
 char	*save_command(char *str);
 
 //SIGNALS
-void    sigintHandler(int signus);
-void    sigquitHandler(int signus);
+void	read_handler(int signal, siginfo_t *data, void *n_data);
+void	heredoc_handler(int signal, siginfo_t *data, void *n_data);
+void	exec_handler(int signal, siginfo_t *data, void *n_data);
 void	init_signals(int mode);
 
 //FUNCTION PTR
