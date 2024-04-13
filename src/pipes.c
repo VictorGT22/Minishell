@@ -24,8 +24,8 @@ void dup_functions(int i, int pipes_nbr, int save, int **pipes)
 
 void pipes_func_ext(t_var *var, int i, t_pipe *struct_pipes, char **commands_arr)
 {
-    int wstatus = -1;
-
+    //int wstatus = -1;
+    
     char *str = ft_strtrim(commands_arr[i], " \t");
     char **params = malloc(sizeof(char *) * 3);
     params[0] = save_command(str);
@@ -40,7 +40,7 @@ void pipes_func_ext(t_var *var, int i, t_pipe *struct_pipes, char **commands_arr
 int func_pipe(t_var *var, char *command)
 {
     char **commands_arr;
-    int num_pipes;
+    //int num_pipes;
     t_pipe *struct_pipes = malloc(sizeof(t_pipe) * 1);
     
     if (!command)

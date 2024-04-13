@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/02/22 17:31:09 by vics             ###   ########.fr       */
+=======
+/*   Updated: 2024/02/29 09:46:36 by mac              ###   ########.fr       */
+>>>>>>> f0ab15435ca466f52a51d90d9c99c01a9f055746
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +20,33 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/signal.h>
 # include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <linux/limits.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
+# include <limits.h>
 #include <sys/wait.h>
 # include "../libft/libft.h"
+# include "../readline/readline.h"
+# include "../readline/history.h"
 
 //COLORS
 #define BLUE "\033[0;34m"
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
+
+//SIGNAL MODES
+# define READ		1
+# define HEREDOC	2
+# define EXEC		3
+
+//GLOBAL VARIABLES
+int	g_exit_sig;
 
 //ACTIONS
 #define NUM_ACTIONS 9
@@ -52,7 +67,7 @@
 #define NO_PERM "Permission denied\n"
 #define NO_DIR "Not a directory\n"
 #define NO_EXIST "No such file or directory.\n"
-
+#define NO_FORK "Error. Fork no created\n"
 //COLORS
 void blue(void);
 void red(void);
@@ -103,30 +118,39 @@ typedef struct s_pipe {
 } t_pipe;
 
 //INITIALIZE
+int	init_loop(char **argv, char **env);
 t_var *init_struct(char **env);
 t_info_tree *init_linked_tree(char *command, char *operator, char *prev_op);
 t_info_tree *init_struct_tree(void);
 
 //ENVIROMENT
-void save_env(t_var *var, char **env);
-t_env *find_in_env(t_env *lst, char *name);
+void 	save_env(t_var *var, char **env);
+t_env 	*find_in_env(t_env *lst, char *name);
 void	add_in_env(t_var *var, char *name, char *value);
-void ft_lstdelone_env(t_env **lst, t_env *todelate);
+void 	ft_lstdelone_env(t_env **lst, t_env *todelate);
 
 //INPUT
-char 	*get_cwd();
+char 	*get_cwd(t_var *var);
 void	manage_history(char *line, char **previous_str);
 
 //UTILS
 int		valid_chars(char n);
 char	*ft_strcat(char *dest, char *src);
 void    func_exit(t_var *var);
-char *ft_newold(char *new, char *old);
+char 	*ft_newold(char *new, char *old);
 
+//TREE OPERATIONS
+bool	ft_replace_chrchr(char *str, char find, char replace);
+char 	*ft_replace_strstr(char *string, int index, int len, char *replace);
+void	ft_remove_chr(char *str, char find);
+char *save_sentence_r(char *string, int num);
+char *save_sentence_l(char *string, int num);
+void    check_operator(t_info_tree *tree);
 
 //FREE
 void	free_arr(char **arr);
-void free_binnarytree(t_info_tree *tree);
+void 	free_binnarytree(t_info_tree *tree);
+void 	make_binnary_tree(t_var *var, char *line);
 
 //GET INFORMATION
 int 	get_biggest_priority(char *string);
@@ -134,9 +158,11 @@ char	*get_operator(char *string, int j);
 char	*save_params(char *str);
 char	*save_command(char *str);
 
-//MANAGE SIGNALS
-void    sigintHandler(int signal);
-void    sigquitHandler(int signal);
+//SIGNALS
+void	read_handler(int signal, siginfo_t *data, void *n_data);
+void	heredoc_handler(int signal, siginfo_t *data, void *n_data);
+void	exec_handler(int signal, siginfo_t *data, void *n_data);
+void	init_signals(int mode);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);
@@ -171,6 +197,7 @@ void	ft_semicolon(t_var *var, t_info_tree *tree);
 //ERROR
 void    stx_error(char *error_msg);
 void    exec_error(char *command, char *error_msg);
+void    stx_error_op(char *error_msg, char op);
 
 //PIPES
 int		func_pipe(t_var *var, char *command);

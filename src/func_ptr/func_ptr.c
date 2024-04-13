@@ -2,6 +2,8 @@
 
 void	ft_pwd(t_var *var, char **params)
 {
+	(void)params;
+	(void)var;
 	char cwd[PATH_MAX];
 
 	printf("%s\n", getcwd(cwd, sizeof(cwd)));
@@ -11,7 +13,7 @@ void	update_oldpwd(t_var *var, char *newpwd)
 {
 	t_env *oldpwd;
 	char cwd[PATH_MAX];
-
+	(void)cwd;
 	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (oldpwd)
 	{

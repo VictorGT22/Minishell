@@ -54,6 +54,8 @@ int get_biggest_priority(char *string)
     int pos = -1;
     int biggest = -1;
 
+    if (string == NULL)
+        return (-1);
     while (string[i] != '\0') {
         if (string[i] == '"' || string[i] == '\'')
         {
