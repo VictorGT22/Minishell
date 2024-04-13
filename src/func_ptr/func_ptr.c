@@ -22,10 +22,11 @@ void	update_oldpwd(t_var *var, char *newpwd)
 		add_in_env(var, strdup("OLDPWD"), strdup(newpwd));
 }
 
-void	change_path(t_var *var, char*param, char *path, char *old_path)
+void	change_path(t_var *var, char *param, char *path, char *old_path)
 {
 	if (chdir(path) == -1)
 	{
+		printf("ENTRAAAA\n");
 		if (access(path, R_OK) == 0)
 			exec_error(param, NO_DIR);
 		else
@@ -44,6 +45,7 @@ void	ft_cd(t_var *var, char **params)
 	int i = 0;
 
 	oldpwd = find_in_env(var->env, "OLDPWD");
+	params[1] = ft_newold(ft_strtrim(params[1], " \t"), params[1]);
 	if (params[1])
 	{
 		if (ft_strcmp(params[1], "-") == 0)
@@ -76,7 +78,7 @@ void	ft_cd(t_var *var, char **params)
 		else
 		{
 			old_path = getcwd(cwd, sizeof(cwd));
-			path = params[1];
+			path = ft_strtrim(params[1], " \t");
 		}
 		change_path(var, params[1], path, old_path);
 	}

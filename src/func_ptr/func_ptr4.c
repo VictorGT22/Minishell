@@ -2,34 +2,28 @@
 
 void	ft_echo(t_var *var, char **params)
 {
-	int index_dash;
-	int index_end;
-	char *flag = NULL;
-	char *temp;
-	char *str = "";
+	int i = 0;
+	char **arr = NULL;
+	bool flag = false;
 
 	if (params[1])
 	{
-		index_dash = ft_strchr_index(params[1], '-');
-		index_end = ft_strchr_index(params[1], ' ');
-		if (index_end == -1)
-			index_end = ft_strlen(params[1]);
-		if (index_dash != -1)
+		arr = ft_split(params[1], ' ');
+		if (strcmp(arr[0], "-n") == 0)
 		{
-			flag = ft_substr(params[1], index_dash, index_end);
-			temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
-			str = ft_strtrim(temp ," \t");
-			printf("%s", str);
-			free(str);
-			free(temp);
+			flag = true;
+			i = 1;
 		}
-		else
-			printf("%s", params[1]);
+		while (arr[i])
+		{
+			printf("%s", arr[i]);
+			i++;
+			if (arr[i])
+				printf(" ");
+		}
 	}
-	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
+	if (!flag || !params[1])
 		printf("\n");
-	if (flag)
-		free(flag);
 }
 
 void	ft_redirection_out(t_var *var, t_info_tree *tree)

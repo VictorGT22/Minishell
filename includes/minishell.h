@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/10 00:52:02 by vics             ###   ########.fr       */
+/*   Updated: 2024/02/22 17:31:09 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,12 @@ void    sigquitHandler(int signal);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);
-void    function_ptr(t_var *var, char **params);
-
+void    function_ptr(t_var *var, char **params, char *command, int *pipe);
 void    save_actions_op(t_var *var);
 void    function_ptr_op(t_var *var, t_info_tree *tree);
+
+void    remove_quote(char **str);
+char *expansion_var(t_var *var, char *command);
 
 void	ft_echo(t_var *var, char **params);
 void	ft_pwd(t_var *var, char **params);
@@ -154,7 +156,7 @@ void	print_env(t_var *var, char *str);
 void	ft_exit(t_var *var, char **params);
 char	*ft_strcat(char *dest, char *src);
 char	*find_func(char **paths, char *function);
-void	execute_action(t_var *var, char **params);
+void	execute_action(t_var *var, char **params, int *pipe);
 void	ft_unset(t_var *var, char**params);
 void	ft_help(t_var *var, char **params);
 void	get_add_var_env(t_var *var, char **params, int index);

@@ -32,7 +32,7 @@ void pipes_func_ext(t_var *var, int i, t_pipe *struct_pipes, char **commands_arr
     params[1] = save_params(str);
     params[2] = NULL;
     dup_functions(i, struct_pipes->num_pipes, struct_pipes->save, struct_pipes->pipes);
-    function_ptr(var, params);
+    function_ptr(var, params, commands_arr[i], struct_pipes->pipes[i]);
 	free(str);
 	free_arr(params);
 }

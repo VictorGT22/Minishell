@@ -43,8 +43,19 @@ void	get_add_var_env(t_var *var, char **params, int index)
 
 void	ft_export(t_var *var, char **params)
 {
-	if (params[1] && ft_strchr_index(params[1], '=') != -1)
-		get_add_var_env(var, params, ft_strchr_index(params[1], '='));
+	char **arr;
+	int i = 0;
+
+	if (params[1])
+	{
+		arr = ft_split(params[1], ' ');
+		while (arr[i])
+		{
+			if (ft_strchr_index(params[1], '=') != -1)
+				get_add_var_env(var, params, ft_strchr_index(params[i], '='));
+			i++;
+		}
+	}
 	else
 		print_env(var, "declare -x");
 }

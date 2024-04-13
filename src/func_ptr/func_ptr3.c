@@ -34,7 +34,6 @@ char *ft_newold(char *new, char *old)
 	return (new);
 }
 
-
 char *find_func(char **paths, char *function)
 {
     char *temp = NULL;
@@ -56,7 +55,7 @@ char *find_func(char **paths, char *function)
     return ("-1");
 }
 
-void	execute_action(t_var *var, char **params)
+void	execute_action(t_var *var, char **params, int *pipe)
 {
 	char **path = ft_split(find_in_env(var->env, "PATH")->value, ':');
 	char *execution_path = find_func(path, params[0]);
@@ -66,9 +65,9 @@ void	execute_action(t_var *var, char **params)
         return;
     else if (pid == 0)
 	{
-        if (execve(execution_path, params, NULL) < 0)
+        if (execvp(execution_path, params) < 0)
 		{
-			if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
+			if (access(params[0], F_OK) != -1)
 			{
 				if (execve(params[0], params, NULL) < 0)
 					exec_error(params[0], NO_PERM);
@@ -76,12 +75,11 @@ void	execute_action(t_var *var, char **params)
 			else
 				exec_error(params[0], NOT_FOUND);			
 		}
+        printf("entra aquest exit???");
         exit(0);
     } else {
-        wait(NULL);
-		free_arr(path);
-		free(execution_path);
-        return;
+        //wait(NULL);
+        close(pipe[1]);
+        //return;
     }
-	
 }

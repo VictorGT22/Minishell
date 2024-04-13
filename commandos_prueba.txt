@@ -1,0 +1,27 @@
+export:
+	export VARIABLE=valor
+	export VARIABLE1=valor1 VARIABLE2=valor2
+	export -f nombre_función
+
+env:
+	env
+	env VARIABLE=valor comando
+
+unset:
+	unset VARIABLE
+	unset -f nombre_función
+
+echo:
+	echo "Mensaje"
+	echo $VARIABLE
+	echo "Hola, soy $nombre y tengo $edad años."
+	echo -n "Este es un mensaje "; echo "en la misma línea."
+
+pwd:
+	pwd
+
+cd:
+	cd directorio
+	cd
+	cd -
+	cd ..

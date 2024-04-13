@@ -6,7 +6,7 @@
 /*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/10 00:59:32 by vics             ###   ########.fr       */
+/*   Updated: 2024/04/13 19:02:19 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,50 +158,124 @@ char *ft_replace_strstr(char *string, int index, int len, char *replace)
     return(new);
 }
 
-char *expansion(t_var *var, char *command)
+char	*remove_extra_spaces(char *str)
+{
+	int j;
+	int	x;
+	char *final;
+	
+	j = 0;
+	x = 0;
+	final = malloc(sizeof(char) * ft_strlen(str) + 1);
+	ft_bzero(final, ft_strlen(str) + 1);
+	while (str[j] && (str[j] == ' ' || str[j] == '\t'))
+		j++;
+	while (str[j])
+	{
+		if ((str[j] != ' ' && str[j] != '\t')
+		|| (str[j + 1] != ' ' && str[j + 1] != '\t'))
+			final[x++] = str[j];
+		j++;
+	}
+	return (final);
+}
+
+char *get_name(t_var *var, char *command, int start, int len)
+{
+    char *name;
+    t_env *env = NULL;
+    
+    name = malloc(sizeof(char) * len + 1);
+    name = ft_substr(command, start, len);
+    env = find_in_env(var->env, name);
+    free(name);
+    if (env)
+        return (remove_extra_spaces(env->value));
+    return (NULL);
+}
+
+void expand(t_var *var, char **command, int index)
+{
+    int i = index + 1;
+    int len = 0;
+    char *value_str;
+    
+    while ((*command)[i] && (ft_isalnum((*command)[i]) || (*command)[i] == '.' || (*command)[i] == '?')) {
+        i++;
+        len++;
+    }
+    value_str = get_name(var, *command, index + 1, len); 
+    if (!value_str) {
+        if (!ft_isalnum((*command)[index + 1])) {
+            if ((*command)[index + 1] == '$') {
+                value_str = ft_strdup("4752");
+                len = 1;
+            }
+            else if ((*command)[index + 1] == '?')
+                value_str = ft_strdup("0");
+            else if ((*command)[index + 1] == '.')
+                value_str = ft_substr(*command, index, len);
+        }           
+        else if (!ft_isalpha((*command)[index + 1]))
+            value_str = ft_substr(*command, index + 2, len - 1);
+        else
+            value_str = ft_strdup("");
+    }
+    if (value_str) {
+        *command = ft_replace_strstr(*command, index, len, value_str);
+        free(value_str);
+    }
+}
+
+char *expansion_var(t_var *var, char *command)
 {
     int i = 0;
-    int len = 0;
-    int last = 0;
-    char *name = NULL;
-    char *value_str = NULL;
-    t_env *env;
-    
-    while (last >= 0)
+    while (command[i])
     {
-        i = ft_strchr_index(&command[last], '$');
-        if (i != -1)
+        if (command[i] == '\'')
         {
-            i += last + 1;
-            while (command[i] && ft_isalnum(command[i]))
-            {
+            i++;
+            while (command[i] && command[i] != '\'')
                 i++;
-                len++;
-            }
         }
-        if (len == 0)
-            last = -1;
-        else
-        {
-            name = malloc(sizeof(char) * len + 1);
-            ft_strlcpy(name, &command[i - len], len + 1);
-            env = find_in_env(var->env, name);
-            free(name);
-            if (env)
-                value_str = ft_strdup(env->value);
-            else if (!ft_isalpha(command[ft_strchr_index(&command[last], '$') + 1]))
-            {
-                int index = ft_strchr_index(&command[last], '$') + 2;
-                value_str = ft_substr(command, index, len - 1);
-            }
-            command = ft_replace_strstr(command, i - len - 1, len, value_str);
-            last = i - ft_strlen(value_str);
-            free(value_str);
-            value_str = "";
-        }
-        len = 0;
+        if (command[i] && command[i] == '$')
+            expand(var, &command, i);
+        i++;
     }
-    return(command);
+    return (command);
+}
+
+void    remove_quote(char **str)
+{
+    int i = 0;
+    int j = 0;
+    char c = '\0';
+
+    while ((*str)[i])
+    {
+        if ((*str)[i] == '\'' || (*str)[i] == '"')
+        {
+            c = (*str)[i];
+            i++;            
+        }
+        else
+            (*str)[j++] = (*str)[i];
+        while (c && (*str)[i])
+        {
+            if ((*str)[i] == c)
+                break;
+            (*str)[j++] = (*str)[i++];
+        }
+        if (!(*str)[i] && c)
+        {
+            (*str) = NULL;
+            break;
+        }
+        c = '\0';
+        i++;
+    }
+    if (*str)
+        (*str)[j] = '\0';
 }
 
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
@@ -213,19 +287,18 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->right = NULL;
         tree->operator = NULL;
         tree->command = string;
-        ft_remove_chr(tree->command, '"');
-        ft_remove_chr(tree->command, '\'');
-        
-    } else {
+    }
+    else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
         tree->left = init_linked_tree(save_sentence_l(string, j), tree->operator, tree->operator);
         tree->right = init_linked_tree(save_sentence_r(string, j), tree->operator, tree->operator);
+        // printf("operador: %s\n", tree->operator);
+        // printf("left->command: %s\n", tree->left->command);
+        // printf("right->command: %s\n", tree->right->command);
         check_operator(tree);
-        ft_remove_chr(tree->left->command, '"');
-        ft_remove_chr(tree->left->command, '\'');
-        ft_remove_chr(tree->right->command, '"');
-        ft_remove_chr(tree->right->command, '\'');
+        remove_quote(&tree->left->command);
+        remove_quote(&tree->right->command);
         recursive_tree(var, tree->left, tree->left->command);
         recursive_tree(var, tree->right, tree->right->command);
     }
@@ -237,7 +310,12 @@ void recursive2(t_var *var, t_info_tree *tree)
     int copia_1 = dup(1);
 
     if (tree->operator != NULL)
-        function_ptr_op(var, tree);
+    {
+        printf("operador: %s\n", tree->operator);
+        printf("operador siguiente derecha: %s\n", tree->right->operator);
+        printf("left->command: %s\n", tree->left->command);
+        printf("right->command: %s\n", tree->right->command);
+    }   //function_ptr_op(var, tree);
     if (tree->left != NULL && tree->left->left != NULL)
         recursive2(var, tree->left);
     if (tree->operator == NULL)
@@ -253,12 +331,18 @@ void make_binnary_tree(t_var *var, char *line)
     t_info_tree *tmp = init_struct_tree();
 	
     var->tree = tmp;
-    line = expansion(var, line);
-    recursive_tree(var, tmp, line);
-    tmp = var->tree;
-    recursive2(var, tmp);
-    tmp = var->tree;
-    free_binnarytree(tmp);
+    line = expansion_var(var, line);
+    remove_quote(&line);
+    if (line)
+    {
+        recursive_tree(var, tmp, line);
+        tmp = var->tree;
+        recursive2(var, tmp);
+        tmp = var->tree;
+        free_binnarytree(tmp);
+    }
+    else
+        printf("error quote!!!!\n");
 }
 
 void free_lst(t_env* head) {
@@ -304,23 +388,35 @@ int main(int argc, char **argv, char **env) {
     t_var *var = init_struct(env);
     previous_str = NULL;
    
-	 while(1)
+   printf("ejecutando minishell!\n");
+	while(1)
 	{
         path = get_cwd(var);
 		line = readline(path);
         line_cleaned = NULL;
+        printf("entra bucle %d!\n", argc);
         free(path);
         if (line && line[0] != '\0')
         {
 		    line_cleaned = ft_strtrim(line, " \t\n");
 		    manage_history(line_cleaned, &previous_str);
+            char **arr = ft_split(line_cleaned, ';');
+            int i = 0;
+            while (arr[i])
+            {
+		        make_binnary_tree(var, arr[i]);
+                printf("fin\n\n");
+                i++;
+            }
         }
-		make_binnary_tree(var, line_cleaned);
 		free(line);
 	}
+    printf("se sale ejecucion\n");
+    
     if (previous_str)
         free(previous_str);
 	rl_clear_history();
+    printf("se sale\n");
     func_exit(var);
     return 0;
 }

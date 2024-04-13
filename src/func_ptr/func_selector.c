@@ -52,9 +52,11 @@ void    save_actions(t_var *var)
     var->act[8].action = NULL;	
 }
 
-void    function_ptr(t_var *var, char **params)
+void    function_ptr(t_var *var, char **params, char *command, int *pipe)
 {
     int i = 0;
+	char **arr = ft_split(command, ' ');
+
     while (var->act[i].action)
     {
 		if (ft_strcmp(params[0], var->act[i].action) == 0)
@@ -65,5 +67,5 @@ void    function_ptr(t_var *var, char **params)
         i++;
     }
 	if (!var->act[i].action)
-		execute_action(var, params);
+		execute_action(var, arr, pipe);
 }

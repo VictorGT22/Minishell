@@ -4,7 +4,7 @@ int valid_chars(char n)
 {
     if (n == '\0' || n == '\n'
     || n == '<' || n == ';' || n == '>'
-    || n == '(' || n == ')' || n == '&')
+    || n == '(' || n == ')' || n == '&' || n == '|')
         return 1;
     return 0;
 }
@@ -13,7 +13,7 @@ int return_priority(char operator)
 {
     if (operator == ')')
         return 3;
-    if (operator == ';')
+    if (operator == ';' || operator == '|')
         return 2;
     if (operator == '<' || operator == '>' || operator == '&')
         return 1;
