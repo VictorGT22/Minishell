@@ -49,6 +49,15 @@ void	exec_handler(int signal, siginfo_t *data, void *n_data)
 	return ;
 }
 
+void eof_handler(int signal)
+{
+    if (signal == SIGQUIT)
+    {
+        ft_putstr_fd("Exit\n", STDERR_FILENO);
+        exit(EXIT_SUCCESS); // O cualquier otro comportamiento que desees
+    }
+}
+
 void	init_signals(int mode)
 {
 	struct sigaction	sign;
@@ -73,4 +82,8 @@ void	init_signals(int mode)
 		sigaction(SIGINT, &sign, NULL);
 		sigaction(SIGQUIT, &sign, NULL);
 	}
+	else if (mode == EOF_MODE) // Modo para manejar EOF
+    {
+        signal(SIGQUIT, eof_handler); // Manejador específico para EOF
+    }
 }

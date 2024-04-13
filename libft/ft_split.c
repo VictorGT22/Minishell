@@ -5,12 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 12:53:40 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/28 14:37:44 by mac              ###   ########.fr       */
+/*   Created: 2023/01/25 10:45:33 by victgonz          #+#    #+#             */
+/*   Updated: 2024/04/13 19:52:25 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+void	free_arr(char **arr)
+{
+	int i = 0;
+
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
 int	num_words(const char *str, char delim)
 {
@@ -35,19 +47,6 @@ int	num_words(const char *str, char delim)
 	return (num_words);
 }
 
-void	free_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 static char	*ext_split(char const *str, int s, int f)
 {
 	int		j;
@@ -67,7 +66,7 @@ static char	*ext_split(char const *str, int s, int f)
 	return (arr);
 }
 
-static char	**ft_split_ext(char **arr, char *str, char c)
+char	**ft_split_ext(char **arr, const char *str, char c)
 {
 	int	i;
 	int	j;
@@ -103,6 +102,6 @@ char	**ft_split(char const *str, char c)
 	arr = malloc(sizeof(char *) * (num_words(str, c) + 1));
 	if (!str || !arr)
 		return (NULL);
-	arr = ft_split_ext(arr, (char *)str, c);
+	arr = ft_split_ext(arr, str, c);
 	return (arr);
 }

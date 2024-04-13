@@ -60,7 +60,6 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->command = string;
         ft_remove_chr(tree->command, '"');
         ft_remove_chr(tree->command, '\'');
-        
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);

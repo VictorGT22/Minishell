@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/02/29 10:13:58 by mac              ###   ########.fr       */
+/*   Updated: 2024/04/13 19:53:38 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_loop(char **argv, char **env)
     t_var *var = init_struct(env);
     previous_str = NULL;
    
-	 while(1)
+	while(1)
 	{
         path = get_cwd(var);
 		line = readline(path);
@@ -35,7 +35,7 @@ int	init_loop(char **argv, char **env)
 		    manage_history(line_cleaned, &previous_str);
         }
 		make_binnary_tree(var, line_cleaned);
-        signal(SIGINT, SIG_IGN);
+        //signal(SIGINT, SIG_IGN);
 		free(line);
 	}
     if (previous_str)

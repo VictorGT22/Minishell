@@ -20,6 +20,7 @@ t_env *find_in_env(t_env *lst, char *name)
 
 	while (tmp)
 	{
+
 		if (ft_strcmp(tmp->name, name) == 0)
 			return (tmp);
 		tmp = tmp->next;

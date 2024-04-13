@@ -41,12 +41,26 @@ int func_pipe(t_var *var, char *command)
 {
     char **commands_arr;
     //int num_pipes;
-    t_pipe *struct_pipes = malloc(sizeof(t_pipe) * 1);
+    t_pipe *struct_pipes;
     
     if (!command)
         return (-1);
     commands_arr = ft_split(command, '|');
-    struct_pipes->num_pipes = ft_arrlen(commands_arr); 
+    if (!commands_arr)
+        return (-1);
+    struct_pipes = malloc(sizeof(t_pipe));
+    if (!struct_pipes)
+    {
+        free_arr(commands_arr);
+        return (-1);
+    }
+    struct_pipes->num_pipes = ft_arrlen(commands_arr);
+    if (struct_pipes->num_pipes <= 0)
+    {
+        free_arr(commands_arr);
+        free(struct_pipes);
+        return (-1);
+    } 
     init_pipes_func(struct_pipes);
     for(int i = 0; i < struct_pipes->num_pipes; i++)
         if (pipe(struct_pipes->pipes[i]) == -1)

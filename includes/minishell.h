@@ -6,7 +6,7 @@
 /*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/29 09:46:36 by mac              ###   ########.fr       */
+/*   Updated: 2024/03/01 03:48:42 by mac              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define READ		1
 # define HEREDOC	2
 # define EXEC		3
+# define EOF_MODE	4
 
 //GLOBAL VARIABLES
 int	g_exit_sig;
