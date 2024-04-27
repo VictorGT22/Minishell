@@ -1,5 +1,7 @@
 #include "../includes/minishell.h"
 
+
+/*
 char *save_sentence_l(char *string, int num)
 {
     int i = 0;
@@ -114,4 +116,4 @@ char *ft_replace_strstr(char *string, int index, int len, char *replace)
     new[j] = '\0';
     free(string);
     return(new);
-}
+}*/

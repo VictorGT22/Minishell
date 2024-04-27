@@ -1,5 +1,6 @@
 #include "../includes/minishell.h"
 
+/*
 char *expansion(t_var *var, char *command)
 {
     int i = 0;
@@ -45,7 +46,6 @@ char *expansion(t_var *var, char *command)
     }
     return(command);
 }
-
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
 {
     if (string == NULL || tree == NULL)
@@ -104,4 +104,4 @@ void make_binnary_tree(t_var *var, char *line)
     recursive2(var, tmp);
     tmp = var->tree;
     free_binnarytree(tmp);
-}
+}*/
