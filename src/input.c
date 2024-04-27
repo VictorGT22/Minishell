@@ -5,6 +5,8 @@ char *get_cwd(t_var *var)
 	char *name = find_in_env(var->env, "USER")->value;
 	char cwd[PATH_MAX];	
 	char* colored_cwd = malloc(strlen(GREEN) + ft_strlen(name) + strlen(RESET) + strlen(BLUE) + strlen(getcwd(cwd, sizeof(cwd))) + strlen(RESET) + 4);
+	if (!colored_cwd)
+		return (NULL);
 	//colored_cwd = "prueba";
 	strcpy(colored_cwd, GREEN);
 	colored_cwd = ft_newold(ft_strcat(colored_cwd, name), colored_cwd);

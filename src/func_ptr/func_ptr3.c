@@ -10,10 +10,13 @@ void	ft_exit(t_var *var, char **params)
 
 char *ft_strcat(char *dest, char *src)
 {
-    char *temp = malloc(sizeof(char) * (ft_strlen(dest) + ft_strlen(src)) + 2);
+    char *temp; 
     int i = 0;
     int n = 0;
 
+    temp = malloc(sizeof(char) * (ft_strlen(dest) + ft_strlen(src)) + 2);
+    if (!temp)
+        return (NULL);
     ft_memset(temp, '\0', (ft_strlen(dest) + ft_strlen(src)) + 2);
     while (dest[i] != '\0') {
         temp[i] = dest[i];

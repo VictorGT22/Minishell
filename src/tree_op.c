@@ -26,6 +26,8 @@ char *expansion(t_var *var, char *command)
         else
         {
             name = malloc(sizeof(char) * len + 1);
+            if (!name)
+                return (NULL);
             ft_strlcpy(name, &command[i - len], len + 1);
             env = find_in_env(var->env, name);
             free(name);

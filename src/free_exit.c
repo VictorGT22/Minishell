@@ -5,7 +5,8 @@ void free_lst(t_env* head)
     t_env* current = head;
     t_env* next;
 
-    while (current != NULL) {
+    while (current != NULL) 
+    {
         next = current->next;
         free(current->name);
         free(current->value);
@@ -20,7 +21,6 @@ void free_binnarytree(t_info_tree *tree)
         return;
     free_binnarytree(tree->left);
     free_binnarytree(tree->right);
-
     if (tree->command)
         free(tree->command);
     if (tree->operator)

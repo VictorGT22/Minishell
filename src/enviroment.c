@@ -8,6 +8,7 @@ t_env	*ft_lstnew_env(void *name, char *value)
 	if (!node)
 		return (NULL);
 	node->name = name;
+	//node->end_type = 0;
 	node->value = value;
 	node->prev = NULL;
 	node->next = NULL;

@@ -1,18 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/03/01 03:48:42 by mac              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+//System .h files
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
@@ -23,96 +12,19 @@
 # include <errno.h>
 # include <limits.h>
 # include <stdbool.h>
-// # include <readline/readline.h>
-// # include <readline/history.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <limits.h>
-#include <sys/wait.h>
-# include "../libft/libft.h"
+# include <sys/wait.h>
+
+// Readline .h files
 # include "../readline/readline.h"
 # include "../readline/history.h"
 
-//COLORS
-#define BLUE "\033[0;34m"
-#define GREEN "\033[0;32m"
-#define RESET "\033[0m"
-
-//SIGNAL MODES
-# define READ		1
-# define HEREDOC	2
-# define EXEC		3
-# define EOF_MODE	4
-
-//GLOBAL VARIABLES
-int	g_exit_sig;
-
-//ACTIONS
-#define NUM_ACTIONS 9
-#define EXIT "exit"
-#define ECHO "echo"
-#define PWD "pwd"
-#define CD "cd"
-#define EXPORT "export"
-#define UNSET "unset"
-#define ENV "env"
-#define HELP "help"
-
-//ERROR MSG
-#define WRONG_OP_NL "minishell: syntax error near unexpected token 'new line'\n"
-#define WRONG_OP "minishell: syntax error near unexpected token"
-#define NO_CLOSED "minishell: syntax error no closed quote\n"
-#define NOT_FOUND "command not found\n"
-#define NO_PERM "Permission denied\n"
-#define NO_DIR "Not a directory\n"
-#define NO_EXIST "No such file or directory.\n"
-#define NO_FORK "Error. Fork no created\n"
-//COLORS
-void blue(void);
-void red(void);
-void purple(void);
-void yellow(void);
-void green(void);
-void resetColor(void);
-
-typedef struct s_var t_var;
-
-typedef struct s_info_tree {
-	char *operator;
-	char *prev_operator;
-	char *command;
-	int checked;
-	struct s_info_tree *left;
-	struct s_info_tree *right;
-} t_info_tree;
-
-typedef struct s_env {
-	char *name;
-	char *value;
-	struct s_env *prev;
-	struct s_env *next;
-} t_env;
-
-typedef struct s_actions {
-	char *action;
-	void (*function)(t_var *var, char **params);
-} t_actions;
-
-typedef struct s_actions_op {
-	char *action;
-	void (*function)(t_var *var, t_info_tree *tree);
-} t_actions_op;
-
-typedef struct s_var {
-	struct s_info_tree *tree;
-	struct s_env *env;
-	struct s_actions *act;
-	struct s_actions_op *op;
-} t_var;
-
-typedef struct s_pipe {
-	int **pipes;
-	int save;
-	int num_pipes;
-} t_pipe;
+// Our .h files
+# include "../libft/libft.h"
+# include "structs.h"
+# include "definitions.h"
 
 //INITIALIZE
 int	init_loop(char **argv, char **env);
@@ -156,10 +68,11 @@ char	*save_params(char *str);
 char	*save_command(char *str);
 
 //SIGNALS
-void	read_handler(int signal, siginfo_t *data, void *n_data);
-void	heredoc_handler(int signal, siginfo_t *data, void *n_data);
-void	exec_handler(int signal, siginfo_t *data, void *n_data);
-void	init_signals(int mode);
+void		update_signal(t_env *env);
+static void	read_handler(int signal, siginfo_t *data, void *n_data);
+static void	heredoc_handler(int signal, siginfo_t *data, void *n_data);
+static void	exec_handler(int signal, siginfo_t *data, void *n_data);
+void		init_signals(int mode);
 
 //FUNCTION PTR
 void    save_actions(t_var *var);

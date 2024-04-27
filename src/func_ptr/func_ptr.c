@@ -14,6 +14,7 @@ void	update_oldpwd(t_var *var, char *newpwd)
 	t_env *oldpwd;
 	char cwd[PATH_MAX];
 	(void)cwd;
+
 	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (oldpwd)
 	{
@@ -43,8 +44,9 @@ void	ft_cd(t_var *var, char **params)
 	t_env *oldpwd;
 	char *path;
 	char *old_path;
-	int i = 0;
-
+	int i;
+	
+	i = 0;
 	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (params[1])
 	{
@@ -93,7 +95,9 @@ void	ft_cd(t_var *var, char **params)
 
 void	print_env(t_var *var, char *str)
 {
-	t_env *tmp = var->env;
+	t_env *tmp;
+	
+	tmp = var->env;
 	while (tmp)
 	{
 		printf("%s %s:%s\n", str, tmp->name, tmp->value);

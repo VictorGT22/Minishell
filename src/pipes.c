@@ -5,8 +5,12 @@ void init_pipes_func(t_pipe *struct_pipes)
     int i = 0;
 
     struct_pipes->pipes = malloc(sizeof(int *) * struct_pipes->num_pipes);
+    if (!struct_pipes->pipes)
+        return;
     for (i = 0; i < struct_pipes->num_pipes; i++)
         struct_pipes->pipes[i] = malloc(sizeof(int) * 2);
+        if (!struct_pipes->pipes[i])
+            return;
     struct_pipes->save = dup(1);
 }
 
@@ -28,6 +32,8 @@ void pipes_func_ext(t_var *var, int i, t_pipe *struct_pipes, char **commands_arr
     
     char *str = ft_strtrim(commands_arr[i], " \t");
     char **params = malloc(sizeof(char *) * 3);
+    if (!params)
+        return;
     params[0] = save_command(str);
     params[1] = save_params(str);
     params[2] = NULL;

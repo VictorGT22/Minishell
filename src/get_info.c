@@ -37,7 +37,8 @@ char *get_operator(char *string, int j)
     int i = 0;
     int len = len_operator(string, j);
     char *operator = malloc(sizeof(char) * len + 1);
-
+    if (!operator)
+        return (NULL);
     while (valid_chars(string[j])) {
         operator[i] = string[j];
         i++;
@@ -82,6 +83,8 @@ char *save_command(char *str)
     while (str[i] && str[i] != ' ')
         i++;
     command = malloc(sizeof(char) * i + 1);
+    if (!command)
+        return (NULL);
     i = 0;
     while (str[i] && str[i] != ' ')
     {
@@ -104,6 +107,8 @@ char *save_params(char *str)
         i++;
     j = ft_strlen(&str[i]);
     param = malloc(sizeof(char) * j + 1);
+    if (!param)
+        return (NULL);
     j = 0;
     while (str[i])
     {

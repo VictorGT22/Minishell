@@ -74,7 +74,6 @@ void	ft_remove_chr(char *str, char find)
 	i = 0;
     j = 0;
 	n = false;
-
     if (str == NULL)
         return;
 	while (str[i])
@@ -97,6 +96,8 @@ char *ft_replace_strstr(char *string, int index, int len, char *replace)
     int i = 0;
 
     char *new = malloc(sizeof(char) * (ft_strlen(string) + ft_strlen(replace) - len + 1));
+    if (!new)
+        return (NULL);
     while (string[i] && i < index)
     {
         new[j] = string[i];

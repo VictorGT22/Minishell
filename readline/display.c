@@ -2683,11 +2683,8 @@ rl_forced_update_display (void)
   register char *temp;
 
   if (visible_line)
-    {
-      temp = visible_line;
-      while (*temp)
-	*temp++ = '\0';
-    }
+    memset (visible_line, 0, line_size);
+
   rl_on_new_line ();
   forced_display++;
   (*rl_redisplay_function) ();
@@ -3341,9 +3338,9 @@ _rl_update_final (void)
       puts_face (&last_line[_rl_screenwidth - 1 + woff],
 		 &last_face[_rl_screenwidth - 1 + woff], 1);
     }
-  _rl_vis_botlin = 0;
-  if (botline_length > 0 || _rl_last_c_pos > 0)
+  if ((_rl_vis_botlin == 0 && botline_length == 0) || botline_length > 0 || _rl_last_c_pos > 0)
     rl_crlf ();
+  _rl_vis_botlin = 0;
   fflush (rl_outstream);
   rl_display_fixed++;
 }

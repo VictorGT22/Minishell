@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 17:52:30 by vics              #+#    #+#             */
-/*   Updated: 2024/04/13 19:53:38 by mac              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 int	init_loop(char **argv, char **env)
@@ -24,18 +12,19 @@ int	init_loop(char **argv, char **env)
    
 	while(1)
 	{
+        init_signals(READ);
         path = get_cwd(var);
 		line = readline(path);
         line_cleaned = NULL;
-        init_signals(READ);
+		update_signal(var->env);
         free(path);
         if (line && line[0] != '\0')
         {
 		    line_cleaned = ft_strtrim(line, " \t\n");
 		    manage_history(line_cleaned, &previous_str);
         }
+		update_signal(var->env);
 		make_binnary_tree(var, line_cleaned);
-        //signal(SIGINT, SIG_IGN);
 		free(line);
 	}
     if (previous_str)
@@ -47,13 +36,17 @@ int	init_loop(char **argv, char **env)
 
 int main(int argc, char **argv, char **env) 
 {
-    int	status;
 	(void)argv;
-	
-	status = 0;
+
+	g_exit_sig = 0;
 	if (argc == 1)
 	{
 		init_loop(argv, env);
 	}
-	return (status);
+	else if (argc != 1 || argv[1] != NULL)
+	{
+		printf("Error: too many arguments\n");
+		exit(1);
+	}
+	return (EXIT_SUCCESS);
 }
