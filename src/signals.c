@@ -1,5 +1,5 @@
 #include "../includes/minishell.h"
-
+/*
 void	read_handler(int signal, siginfo_t *data, void *n_data)
 {
 	(void) data;
@@ -74,3 +74,4 @@ void	init_signals(int mode)
 		sigaction(SIGQUIT, &sign, NULL);
 	}
 }
+*/

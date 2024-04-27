@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mac <mac@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:29:03 by mcatalan@st       #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/22 17:31:09 by vics             ###   ########.fr       */
-=======
-/*   Updated: 2024/02/29 09:46:36 by mac              ###   ########.fr       */
->>>>>>> f0ab15435ca466f52a51d90d9c99c01a9f055746
+/*   Updated: 2024/04/27 18:07:33 by vics             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +42,7 @@
 # define EXEC		3
 
 //GLOBAL VARIABLES
-int	g_exit_sig;
+//int	g_exit_sig;
 
 //ACTIONS
 #define NUM_ACTIONS 9
