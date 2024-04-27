@@ -25,7 +25,7 @@ void	get_add_var_env(t_var *var, char **params, int index)
 	name = ft_substr(params[1], 0, index);
 	value = ft_substr(params[1], index + 1, ft_strlen(params[1]) - index + 1);
 	env_name = find_in_env(var->env, name);
-	if (isalpha(name[0]))
+	if (ft_isalpha(name[0]))
 	{
 		if (!env_name)
 			add_in_env(var, ft_strdup(name), ft_strdup(value));

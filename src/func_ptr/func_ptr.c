@@ -19,10 +19,10 @@ void	update_oldpwd(t_var *var, char *newpwd)
 	if (oldpwd)
 	{
 		free(oldpwd->value);
-		oldpwd->value = strdup(newpwd);
+		oldpwd->value = ft_strdup(newpwd);
 	}
 	else
-		add_in_env(var, strdup("OLDPWD"), strdup(newpwd));
+		add_in_env(var, ft_strdup("OLDPWD"), ft_strdup(newpwd));
 }
 
 void	change_path(t_var *var, char*param, char *path, char *old_path)
