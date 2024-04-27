@@ -1,0 +1,16 @@
+COSAS QUE NO FUNCIONAN
+
+MINISHELL-MINISHELL
+PIPES ENCADENADAS(echo prueba > prueba.txt | wc -l)
+<< a << b cat
+ls | wc -l | exit (no deberia imprimr exit)
+
+pwd << p ; ls << prueba (da segfault)
+Output:
+> p
+> prueba
+/Path donde estas
+Ejecucion ls
+
+
+No enviroment!

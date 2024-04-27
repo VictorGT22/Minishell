@@ -48,6 +48,39 @@ char *expansion(t_var *var, char *command)
     return(command);
 }
 
+void    remove_quote(char **str)
+{
+    int i = 0;
+    int j = 0;
+    char c = '\0';
+
+    while ((*str)[i])
+    {
+        if ((*str)[i] == '\'' || (*str)[i] == '"')
+        {
+            c = (*str)[i];
+            i++;            
+        }
+        else
+            (*str)[j++] = (*str)[i];
+        while (c && (*str)[i])
+        {
+            if ((*str)[i] == c)
+                break;
+            (*str)[j++] = (*str)[i++];
+        }
+        if (!(*str)[i] && c)
+        {
+            (*str) = NULL;
+            break;
+        }
+        c = '\0';
+        i++;
+    }
+    if (*str)
+        (*str)[j] = '\0';
+}
+
 void recursive_tree(t_var *var, t_info_tree *tree, char *string)
 {
     if (string == NULL || tree == NULL)
@@ -60,18 +93,14 @@ void recursive_tree(t_var *var, t_info_tree *tree, char *string)
         tree->right = NULL;
         tree->operator = NULL;
         tree->command = string;
-        ft_remove_chr(tree->command, '"');
-        ft_remove_chr(tree->command, '\'');
+        remove_quote(&tree->command);
     } else {
         tree->command = NULL;
         tree->operator = get_operator(string, j);
         tree->left = init_linked_tree(save_sentence_l(string, j), tree->operator, tree->operator);
         tree->right = init_linked_tree(save_sentence_r(string, j), tree->operator, tree->operator);
         check_operator(tree);
-        ft_remove_chr(tree->left->command, '"');
-        ft_remove_chr(tree->left->command, '\'');
-        ft_remove_chr(tree->right->command, '"');
-        ft_remove_chr(tree->right->command, '\'');
+        remove_quote(&tree->command);
         recursive_tree(var, tree->left, tree->left->command);
         recursive_tree(var, tree->right, tree->right->command);
     }

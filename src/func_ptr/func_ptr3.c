@@ -56,7 +56,7 @@ char *find_func(char **paths, char *function)
 		free(temp);
         i++;
     }
-    return ("-1");
+    return (ft_strdup("-1"));
 }
 
 void	execute_action(t_var *var, char **params)
@@ -65,14 +65,18 @@ void	execute_action(t_var *var, char **params)
 	char *execution_path = find_func(path, params[0]);
     pid_t pid = fork();
 
+    
     if (pid == -1)
         return;
     else if (pid == 0)
 	{
+        printf("entra: %s\n", execution_path);
         if (execve(execution_path, params, NULL) < 0)
 		{
+            printf("no puedo ejec");
 			if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
 			{
+                printf("y aquinentra???");
 				if (execve(params[0], params, NULL) < 0)
 					exec_error(params[0], NO_PERM);
 			}

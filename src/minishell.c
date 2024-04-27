@@ -37,7 +37,7 @@ int	init_loop(char **argv, char **env)
 int main(int argc, char **argv, char **env) 
 {
 	(void)argv;
-
+	printf("esto esta funcionando?????\n");
 	g_exit_sig = 0;
 	if (argc == 1)
 	{
@@ -48,5 +48,7 @@ int main(int argc, char **argv, char **env)
 		printf("Error: too many arguments\n");
 		exit(1);
 	}
+	printf("salee\n");
 	return (EXIT_SUCCESS);
+
 }

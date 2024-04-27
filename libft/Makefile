@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vics <vics@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2023/12/13 15:47:26 by vics             ###   ########.fr        #
+#    Updated: 2024/04/27 19:16:36 by mac              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ DEPS = $(SRCS:.c=.d)
 DEPS_BONUS = $(SRCSB:.c=.d)
 
 %.o: %.c libft.h
-	${CC} ${CFLAGS} -MMD $(INCLUDE) -c $< -o $@
+	@${CC} ${CFLAGS} -MMD $(INCLUDE) -c $< -o $@
 
 all: $(NAME)
 

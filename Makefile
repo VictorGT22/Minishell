@@ -6,7 +6,7 @@
 #    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/04/22 10:59:11 by mac              ###   ########.fr        #
+#    Updated: 2024/04/27 19:17:22 by mac              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,7 @@ DEPS = $(SRCS:.c=.d)
 INCLUDE = -I./
 RM = rm -rf
 CFLAGS = #-Wall -Wextra -Werror
-OFLAGS = -g  -fsanitize=address #-fsanitize=leak
+OFLAGS = -g  #-fsanitize=address -fsanitize=leak
 
 all: print_message $(READLINE_A) libft $(NAME)
 	@echo "$(GREEN)Build finished successfully!$(RESET)✅"
@@ -128,7 +128,7 @@ print_message:
 	$(PRINT_AUTHORS)
 
 %.o: %.c
-	@echo "$(YELLOW)Compiling...$(RESET)"
+#   @echo "$(YELLOW)Compiling...$(RESET)"
 	@${CC} ${CFLAGS} $(DEFS) -MMD $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT_D)$(LIBFT) $(READLINE_A)
