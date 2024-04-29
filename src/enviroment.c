@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enviroment.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:42:54 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 t_env	*ft_lstnew_env(void *name, char *value)
@@ -21,7 +33,6 @@ t_env	*find_in_env(t_env *lst, char *name)
 	tmp = lst;
 	while (tmp)
 	{
-
 		if (ft_strcmp(tmp->name, name) == 0)
 			return (tmp);
 		tmp = tmp->next;
@@ -45,7 +56,6 @@ void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 {
 	if (!lst || !todelate)
 		return ;
-
 	if (todelate == *lst)
 	{
 		*lst = todelate->next;
@@ -58,7 +68,6 @@ void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 		if (todelate->next)
 			todelate->next->prev = todelate->prev;
 	}
-
 	free(todelate->name);
 	free(todelate->value);
 	free(todelate);

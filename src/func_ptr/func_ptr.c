@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   func_ptr.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:34:10 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:46:29 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	ft_pwd(t_var *var, char **params)
 {
+	char	cwd[PATH_MAX];
+
 	(void)params;
 	(void)var;
-	char cwd[PATH_MAX];
-
 	printf("%s\n", getcwd(cwd, sizeof(cwd)));
 }
 
 void	update_oldpwd(t_var *var, char *newpwd)
 {
-	t_env *oldpwd;
-	char cwd[PATH_MAX];
-	(void)cwd;
+	t_env	*oldpwd;
+	char	cwd[PATH_MAX];
 
+	(void)cwd;
 	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (oldpwd)
 	{
@@ -40,12 +52,12 @@ void	change_path(t_var *var, char*param, char *path, char *old_path)
 
 void	ft_cd(t_var *var, char **params)
 {
-	char cwd[PATH_MAX];
-	t_env *oldpwd;
-	char *path;
-	char *old_path;
-	int i;
-	
+	char	cwd[PATH_MAX];
+	t_env	*oldpwd;
+	char	*path;
+	char	*old_path;
+	int		i;
+
 	i = 0;
 	oldpwd = find_in_env(var->env, "OLDPWD");
 	if (params[1])
@@ -54,7 +66,7 @@ void	ft_cd(t_var *var, char **params)
 		{
 			if (oldpwd)
 			{
-				printf("%s\n", oldpwd->value);//print del path
+				printf("%s\n", oldpwd->value);
 				path = strdup(oldpwd->value);
 			}
 			else
@@ -75,7 +87,8 @@ void	ft_cd(t_var *var, char **params)
 		else if (params[1][0] != '/')
 		{
 			old_path = getcwd(cwd, sizeof(cwd));
-			path = ft_strcat(ft_strcat(getcwd(cwd, sizeof(cwd)), "/"), params[1]);
+			path = ft_strcat(ft_strcat(getcwd(cwd, sizeof(cwd)),
+						"/"), params[1]);
 		}
 		else
 		{
@@ -90,13 +103,12 @@ void	ft_cd(t_var *var, char **params)
 		path = "/";
 		change_path(var, params[1], path, old_path);
 	}
-
 }
 
 void	print_env(t_var *var, char *str)
 {
-	t_env *tmp;
-	
+	t_env	*tmp;
+
 	tmp = var->env;
 	while (tmp)
 	{
@@ -104,4 +116,3 @@ void	print_env(t_var *var, char *str)
 		tmp = tmp->next;
 	}
 }
-

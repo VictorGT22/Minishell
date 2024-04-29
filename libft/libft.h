@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vics <vics@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 19:09:06 by mcatalan@st       #+#    #+#             */
-/*   Updated: 2024/02/09 11:58:56 by vics             ###   ########.fr       */
+/*   Updated: 2024/04/29 14:37:22 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 void			ft_putchar(char c);
 int				ft_arrlen(char **arr);
 long long int	ft_atol(const char *str);
-int ft_strchr_index(const char *s, char c);
+int				ft_strchr_index(const char *s, char c);
 
 #endif

@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:35:08 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:47:34 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	exec_error(char *command, char *error_msg)
 {
 	int	fd;
-	//char	*s;
 
 	fd = dup(1);
 	dup2(2, 1);
@@ -14,7 +25,6 @@ void	exec_error(char *command, char *error_msg)
 void	stx_error(char *error_msg)
 {
 	int	fd;
-	//char *s;
 
 	fd = dup(1);
 	dup2(2, 1);
@@ -25,7 +35,6 @@ void	stx_error(char *error_msg)
 void	stx_error_op(char *error_msg, char op)
 {
 	int	fd;
-	//char *s;
 
 	fd = dup(1);
 	dup2(2, 1);

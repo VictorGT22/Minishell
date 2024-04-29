@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_exit.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:35:13 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:49:03 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	free_lst(t_env *head)
@@ -28,7 +40,6 @@ void	free_binnarytree(t_info_tree *tree)
 		free(tree->operator);
 	free(tree);
 }
-
 
 void	func_exit(t_var *var)
 {

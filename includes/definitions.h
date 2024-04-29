@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   definitions.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:38:26 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:41:43 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEFINITIONS_H
 # define DEFINITIONS_H
 
@@ -22,7 +34,7 @@
 # define HELP "help"
 
 //ERROR MSG
-# define WRONG_OP_NL "minishell: syntax error near unexpected token 'new line'\n"
+# define WRONG_OP_NL "minishell: syntax error 'new line'\n"
 # define WRONG_OP "minishell: syntax error near unexpected token"
 # define NO_CLOSED "minishell: syntax error no closed quote\n"
 # define NOT_FOUND "command not found\n"

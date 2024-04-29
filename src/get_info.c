@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_info.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/29 14:35:19 by oseivane          #+#    #+#             */
+/*   Updated: 2024/04/29 14:49:17 by oseivane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	valid_chars(char n)
@@ -83,7 +95,6 @@ int	get_biggest_priority(char *string)
 	}
 	return (pos);
 }
-
 
 char	*save_command(char *str)
 {
