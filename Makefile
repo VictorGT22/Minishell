@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mac <mac@student.42.fr>                    +#+  +:+       +#+         #
+#    By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/04 19:10:12 by mcatalan@st       #+#    #+#              #
-#    Updated: 2024/04/27 19:17:22 by mac              ###   ########.fr        #
+#    Updated: 2024/04/29 11:50:27 by oseivane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,7 @@ DEPS = $(SRCS:.c=.d)
 INCLUDE = -I./
 RM = rm -rf
 CFLAGS = #-Wall -Wextra -Werror
-OFLAGS = -g  #-fsanitize=address -fsanitize=leak
+OFLAGS = -g  #-fsanitize=address #-fsanitize=leak
 
 all: print_message $(READLINE_A) libft $(NAME)
 	@echo "$(GREEN)Build finished successfully!$(RESET)✅"

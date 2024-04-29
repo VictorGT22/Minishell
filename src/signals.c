@@ -2,8 +2,9 @@
 
 void	update_signal(t_env *env)
 {
-	if (g_exit_sig)
-		env->end_type = g_exit_sig;
+	// if (g_exit_sig)
+	// 	env->end_type = g_exit_sig;
+	(void)env;
 }
 
 static void	read_handler(int signal, siginfo_t *data, void *n_data)

@@ -26,6 +26,13 @@
 # include "structs.h"
 # include "definitions.h"
 
+//DISPLAYS
+void	ft_printall(t_var *var);
+char *intToString(int num);
+char *toString_t_var(t_var *var);
+char *toString_t_env(t_env *env);
+char *toString_t_info_tree(t_info_tree *tree);
+
 //INITIALIZE
 int	init_loop(char **argv, char **env);
 t_var *init_struct(char **env);

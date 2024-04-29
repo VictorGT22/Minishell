@@ -25,6 +25,8 @@ int	init_loop(char **argv, char **env)
         }
 		update_signal(var->env);
 		make_binnary_tree(var, line_cleaned);
+		ft_printall(var);
+		//toString_t_var(var);
 		free(line);
 	}
     if (previous_str)

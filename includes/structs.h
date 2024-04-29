@@ -38,7 +38,6 @@ typedef struct s_info_tree {
 typedef struct s_env {
 	char *name;
 	char *value;
-	int 	end_type;
 	struct s_env *prev;
 	struct s_env *next;
 } t_env;

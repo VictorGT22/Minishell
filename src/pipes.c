@@ -46,7 +46,7 @@ void pipes_func_ext(t_var *var, int i, t_pipe *struct_pipes, char **commands_arr
 int func_pipe(t_var *var, char *command)
 {
     char **commands_arr;
-    //int num_pipes;
+    int num_pipes;
     t_pipe *struct_pipes;
     
     if (!command)

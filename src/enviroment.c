@@ -8,17 +8,17 @@ t_env	*ft_lstnew_env(void *name, char *value)
 	if (!node)
 		return (NULL);
 	node->name = name;
-	//node->end_type = 0;
 	node->value = value;
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);
 }
 
-t_env *find_in_env(t_env *lst, char *name)
+t_env	*find_in_env(t_env *lst, char *name)
 {
-	t_env *tmp = lst;
+	t_env	*tmp;
 
+	tmp = lst;
 	while (tmp)
 	{
 
@@ -41,27 +41,27 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (temp);
 }
 
-void ft_lstdelone_env(t_env **lst, t_env *todelate)
+void	ft_lstdelone_env(t_env **lst, t_env *todelate)
 {
-    if (!lst || !todelate)
-        return;
+	if (!lst || !todelate)
+		return ;
 
-    if (todelate == *lst)
-    {
-        *lst = todelate->next;
-        if (*lst)
-            (*lst)->prev = NULL;
-    }
-    else
-    {
-        todelate->prev->next = todelate->next;
-        if (todelate->next)
-            todelate->next->prev = todelate->prev;
-    }
+	if (todelate == *lst)
+	{
+		*lst = todelate->next;
+		if (*lst)
+			(*lst)->prev = NULL;
+	}
+	else
+	{
+		todelate->prev->next = todelate->next;
+		if (todelate->next)
+			todelate->next->prev = todelate->prev;
+	}
 
-    free(todelate->name);
-    free(todelate->value);
-    free(todelate);
+	free(todelate->name);
+	free(todelate->value);
+	free(todelate);
 }
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
@@ -83,20 +83,21 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 
 void	add_in_env(t_var *var, char *name, char *value)
 {
-	t_env *new;
-	
+	t_env	*new;
+
 	new = ft_lstnew_env(name, value);
 	ft_lstadd_back_env(&var->env, new);
 }
 
-void save_env(t_var *var, char **env)
+void	save_env(t_var *var, char **env)
 {
-	int i = 0;
-	var->env = NULL;
-	t_env *new;
-	char **arr;
+	int		i;
+	t_env	*new;
+	char	**arr;
 
-    while (env[i])
+	i = 0;
+	var->env = NULL;
+	while (env[i])
 	{
 		arr = ft_split(env[i], '=');
 		new = ft_lstnew_env(ft_strdup(arr[0]), ft_strdup(arr[1]));
