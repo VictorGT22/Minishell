@@ -2,41 +2,43 @@
 
 int	init_loop(char **argv, char **env)
 {
-    (void)argv;
-	char *line = NULL;
-	char *line_cleaned;
-	char *previous_str;
-    char *path;
-    t_var *var = init_struct(env);
-    previous_str = NULL;
-   
-	while(1)
+	char	*line;
+	char	*line_cleaned;
+	char	*previous_str;
+	char	*path;
+	t_var	*var;
+
+	(void)argv;
+	line = NULL;
+	var = init_struct(env);
+	previous_str = NULL;
+	while (1)
 	{
-        init_signals(READ);
-        path = get_cwd(var);
+		init_signals(READ);
+		path = get_cwd(var);
 		line = readline(path);
-        line_cleaned = NULL;
+		line_cleaned = NULL;
 		update_signal(var->env);
-        free(path);
-        if (line && line[0] != '\0')
-        {
-		    line_cleaned = ft_strtrim(line, " \t\n");
-		    manage_history(line_cleaned, &previous_str);
-        }
+		free(path);
+		if (line && line[0] != '\0')
+		{
+			line_cleaned = ft_strtrim(line, " \t\n");
+			manage_history(line_cleaned, &previous_str);
+		}
 		update_signal(var->env);
 		make_binnary_tree(var, line_cleaned);
 		ft_printall(var);
 		//toString_t_var(var);
 		free(line);
 	}
-    if (previous_str)
-        free(previous_str);
+	if (previous_str)
+		free(previous_str);
 	rl_clear_history();
-    func_exit(var);
-    return 0;
+	func_exit(var);
+	return (0);
 }
 
-int main(int argc, char **argv, char **env) 
+int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
 	printf("esto esta funcionando?????\n");
