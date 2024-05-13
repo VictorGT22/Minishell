@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_ptr2.c                                        :+:      :+:    :+:   */
+/*   built_in_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:19 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:45:49 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:20:29 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_unset(t_var *var, char**params)
+void	print_env(t_var *var, char *str)
 {
-	t_env	*env_name;
-	char	*name;
-	int		index;
+	t_env	*tmp;
 
-	if (params[1])
+	tmp = var->env;
+	while (tmp)
 	{
-		index = ft_strchr_index(params[1], '=');
-		name = ft_substr(params[1], 0, index);
-		env_name = find_in_env(var->env, name);
-		if (env_name)
-			ft_lstdelone_env(&var->env, env_name);
+		printf("%s %s:%s\n", str, tmp->name, tmp->value);
+		tmp = tmp->next;
 	}
 }
 

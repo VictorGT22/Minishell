@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:51 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:35:52 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:11:28 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	read_handler(int signal, siginfo_t *data, void *n_data)
 	(void) n_data;
 	if (signal == SIGINT)
 	{
-		g_exit_sig = 1;
+		//g_exit_sig = 1;
 		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_replace_line("", 1);
 		rl_on_new_line();
@@ -51,13 +51,13 @@ static void	exec_handler(int signal, siginfo_t *data, void *n_data)
 	(void) n_data;
 	if (signal == SIGINT)
 	{
-		g_exit_sig = 130;
+		//g_exit_sig = 130;
 		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_replace_line("", 1);
 	}
 	else if (signal == SIGQUIT)
 	{
-		g_exit_sig = 131;
+		//g_exit_sig = 131;
 		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
 		rl_replace_line("", 1);
 	}
@@ -69,7 +69,7 @@ void	init_signals(int mode)
 
 	sig.sa_flags = SA_RESTART;
 	sigemptyset(&sig.sa_mask);
-	g_exit_sig = 0;
+	//g_exit_sig = 0;
 	if (mode == READ)
 	{
 		sig.sa_sigaction = read_handler;

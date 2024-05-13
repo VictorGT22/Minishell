@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_ptr.c                                         :+:      :+:    :+:   */
+/*   built_in_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:10 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:46:29 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:19:36 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,3 @@ void	ft_cd(t_var *var, char **params)
 	}
 }
 
-void	print_env(t_var *var, char *str)
-{
-	t_env	*tmp;
-
-	tmp = var->env;
-	while (tmp)
-	{
-		printf("%s %s:%s\n", str, tmp->name, tmp->value);
-		tmp = tmp->next;
-	}
-}

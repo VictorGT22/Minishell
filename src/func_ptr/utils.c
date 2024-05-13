@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_ptr3.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 14:34:25 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:45:00 by oseivane         ###   ########.fr       */
+/*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
+/*   Updated: 2024/05/13 11:27:40 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_exit(t_var *var, char **params)
-{
-	//HACER TODOS LOS FREES
-	printf("exit\n");
-	func_exit(var);
-	exit(0);
-    //cambiar 0 por exit code
-}
-
 char	*ft_strcat(char *dest, char *src)
 {
 	char	*temp;
 	int		i;
+	int		j;
 	int		n;
 
 	i = 0;
+	j = 0;
 	n = 0;
 	temp = malloc(sizeof(char) * (ft_strlen(dest) + ft_strlen(src)) + 2);
 	if (!temp)
 		return (NULL);
 	ft_memset(temp, '\0', (ft_strlen(dest) + ft_strlen(src)) + 2);
-	while (dest[i] != '\0')
-		temp[i++] = dest[i++];
+	while (dest[j] != '\0')
+		temp[i++] = dest[j++];
 	while (src[n] != '\0')
 		temp[i++] = src[n++];
 	temp[i] = '\0';

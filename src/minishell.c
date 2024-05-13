@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:38 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:35:39 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:10:57 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
 	printf("esto esta funcionando?????\n");
-	g_exit_sig = 0;
+	//g_exit_sig = 0;
 	if (argc == 1)
 	{
 		init_loop(argv, env);

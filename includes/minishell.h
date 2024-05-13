@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:39:16 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:12:07 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@
 # include "structs.h"
 # include "definitions.h"
 
+//GLOBAL VARIABLE
+
+int wstatus;
+
 //DISPLAYS
 void		ft_printall(t_var *var);
 char		*intToString(int num);
@@ -53,9 +57,12 @@ t_info_tree	*init_struct_tree(void);
 
 //ENVIROMENT
 void		save_env(t_var *var, char **env);
-t_env		*find_in_env(t_env *lst, char *name);
 void		add_in_env(t_var *var, char *name, char *value);
 void		ft_lstdelone_env(t_env **lst, t_env *todelate);
+void		ft_lstadd_back_env(t_env **lst, t_env *new);
+t_env		*ft_lstnew_env(void *name, char *value);
+t_env		*ft_lstlast_env(t_env *lst);
+t_env		*find_in_env(t_env *lst, char *name);
 
 //INPUT
 char		*get_cwd(t_var *var);
@@ -93,7 +100,7 @@ static void	heredoc_handler(int signal, siginfo_t *data, void *n_data);
 static void	exec_handler(int signal, siginfo_t *data, void *n_data);
 void		init_signals(int mode);
 
-//FUNCTION PTR
+//BUILT-IN
 void		save_actions(t_var *var);
 void		function_ptr(t_var *var, char **params);
 

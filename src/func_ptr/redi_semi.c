@@ -6,45 +6,11 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:29:59 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:33:43 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:22:11 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_echo(t_var *var, char **params)
-{
-	int		index_dash;
-	int		index_end;
-	char	*flag;
-	char	*temp;
-	char	*str;
-
-	flag = NULL;
-	str = "";
-	if (params[1])
-	{
-		index_dash = ft_strchr_index(params[1], '-');
-		index_end = ft_strchr_index(params[1], ' ');
-		if (index_end == -1)
-			index_end = ft_strlen(params[1]);
-		if (index_dash != -1)
-		{
-			flag = ft_substr(params[1], index_dash, index_end);
-			temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
-			str = ft_strtrim(temp, " \t");
-			printf("%s", str);
-			free(str);
-			free(temp);
-		}
-		else
-			printf("%s", params[1]);
-	}
-	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
-		printf("\n");
-	if (flag)
-		free(flag);
-}
 
 void	ft_redirection_out(t_var *var, t_info_tree *tree)
 {

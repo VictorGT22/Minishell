@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:45 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:35:46 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:10:19 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	pipes_func_ext(t_var *var, int i,
 {
 	char	*str;
 	char	**params;
-	//int wstatus = -1;
+	int		wstatus;
 
+	wstatus = -1;
 	str = ft_strtrim(commands_arr[i], " \t");
 	params = malloc(sizeof(char *) * 3);
 	if (!params)

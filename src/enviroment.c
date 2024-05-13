@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:35:03 by oseivane          #+#    #+#             */
-/*   Updated: 2024/04/29 14:42:54 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:46:57 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ t_env	*ft_lstnew_env(void *name, char *value)
 	return (node);
 }
 
-t_env	*find_in_env(t_env *lst, char *name)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, name) == 0)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
 t_env	*ft_lstlast_env(t_env *lst)
 {
 	t_env	*temp;
@@ -52,26 +38,6 @@ t_env	*ft_lstlast_env(t_env *lst)
 	return (temp);
 }
 
-void	ft_lstdelone_env(t_env **lst, t_env *todelate)
-{
-	if (!lst || !todelate)
-		return ;
-	if (todelate == *lst)
-	{
-		*lst = todelate->next;
-		if (*lst)
-			(*lst)->prev = NULL;
-	}
-	else
-	{
-		todelate->prev->next = todelate->next;
-		if (todelate->next)
-			todelate->next->prev = todelate->prev;
-	}
-	free(todelate->name);
-	free(todelate->value);
-	free(todelate);
-}
 
 void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
@@ -88,14 +54,6 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 			temp->next = new;
 		}
 	}
-}
-
-void	add_in_env(t_var *var, char *name, char *value)
-{
-	t_env	*new;
-
-	new = ft_lstnew_env(name, value);
-	ft_lstadd_back_env(&var->env, new);
 }
 
 void	save_env(t_var *var, char **env)
