@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:39:15 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:12:07 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:54:24 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,21 @@ void		function_ptr(t_var *var, char **params);
 
 void		save_actions_op(t_var *var);
 void		function_ptr_op(t_var *var, t_info_tree *tree);
-
+void		ft_index(char **params, int index_dash, char *flag);
 void		ft_echo(t_var *var, char **params);
 void		ft_pwd(t_var *var, char **params);
 void		update_oldpwd(t_var *var, char *newpwd);
 void		change_path(t_var *var, char*param, char *path, char *old_path);
+void		hyphen_case(t_var *var, char *path, char *old_path);
+void		etc_case(char *path, char *old_path);
+void		slash_case(char *path, char *old_path, char **params);
+void		other_case(char *path, char *old_path, char **params);
 void		ft_cd(t_var *var, char **params);
 void		print_env(t_var *var, char *str);
 void		ft_exit(t_var *var, char **params);
 char		*ft_strcat(char *dest, char *src);
 char		*find_func(char **paths, char *function);
+void		exec_path(char *execution_path, char **params);
 void		execute_action(t_var *var, char **params);
 void		ft_unset(t_var *var, char**params);
 void		ft_help(t_var *var, char **params);

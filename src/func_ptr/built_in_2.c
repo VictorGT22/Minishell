@@ -6,40 +6,44 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:25 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:27:30 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:58:09 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_echo(t_var *var, char **params)
+void	ft_index(char **params, int index_dash, char *flag)
 {
-	int		index_dash;
 	int		index_end;
-	char	*flag;
 	char	*temp;
 	char	*str;
 
-	flag = NULL;
 	str = "";
-	if (params[1])
+	index_dash = ft_strchr_index(params[1], '-');
+	index_end = ft_strchr_index(params[1], ' ');
+	if (index_end == -1)
+		index_end = ft_strlen(params[1]);
+	if (index_dash != -1)
 	{
-		index_dash = ft_strchr_index(params[1], '-');
-		index_end = ft_strchr_index(params[1], ' ');
-		if (index_end == -1)
-			index_end = ft_strlen(params[1]);
-		if (index_dash != -1)
-		{
-			flag = ft_substr(params[1], index_dash, index_end);
-			temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
-			str = ft_strtrim(temp, " \t");
-			printf("%s", str);
-			free(str);
-			free(temp);
-		}
-		else
-			printf("%s", params[1]);
+		flag = ft_substr(params[1], index_dash, index_end);
+		temp = ft_substr(params[1], index_end, ft_strlen(params[1]));
+		str = ft_strtrim(temp, " \t");
+		printf("%s", str);
+		free(str);
+		free(temp);
 	}
+	else
+		printf("%s", params[1]);
+}
+
+void	ft_echo(t_var *var, char **params)
+{
+	int		index_dash;
+	char	*flag;
+
+	flag = NULL;
+	if (params[1])
+		ft_index(*params, index_dash, flag);
 	if (!params[1] || index_dash == -1 || ft_strcmp(flag, "-n") != 0)
 		printf("\n");
 	if (flag)

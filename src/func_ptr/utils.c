@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:27:12 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:27:40 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:24:28 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,24 @@ char	*find_func(char **paths, char *function)
 	return (ft_strdup("-1"));
 }
 
+void	exec_path(char *execution_path, char **params)
+{
+	printf("entra: %s\n", execution_path);
+	if (execve(execution_path, params, NULL) < 0)
+	{
+		printf("no puedo ejec");
+		if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
+		{
+			printf("y aquinentra???");
+			if (execve(params[0], params, NULL) < 0)
+				exec_error(params[0], NO_PERM);
+		}
+		else
+			exec_error(params[0], NOT_FOUND);
+	}
+	exit(0);
+}
+
 void	execute_action(t_var *var, char **params)
 {
 	char	**path;
@@ -77,22 +95,7 @@ void	execute_action(t_var *var, char **params)
 	if (pid == -1)
 		return ;
 	else if (pid == 0)
-	{
-		printf("entra: %s\n", execution_path);
-		if (execve(execution_path, params, NULL) < 0)
-		{
-			printf("no puedo ejec");
-			if (access(params[0], F_OK) != -1 && params[0][0] != '\0')
-			{
-				printf("y aquinentra???");
-				if (execve(params[0], params, NULL) < 0)
-					exec_error(params[0], NO_PERM);
-			}
-			else
-				exec_error(params[0], NOT_FOUND);
-		}
-		exit(0);
-	}
+		exec_path(execution_path, params);
 	else
 	{
 		wait(NULL);

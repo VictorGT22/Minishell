@@ -6,7 +6,7 @@
 /*   By: oseivane <oseivane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:34:10 by oseivane          #+#    #+#             */
-/*   Updated: 2024/05/13 11:19:36 by oseivane         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:52:36 by oseivane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,59 +49,3 @@ void	change_path(t_var *var, char*param, char *path, char *old_path)
 	else
 		update_oldpwd(var, old_path);
 }
-
-void	ft_cd(t_var *var, char **params)
-{
-	char	cwd[PATH_MAX];
-	t_env	*oldpwd;
-	char	*path;
-	char	*old_path;
-	int		i;
-
-	i = 0;
-	oldpwd = find_in_env(var->env, "OLDPWD");
-	if (params[1])
-	{
-		if (ft_strcmp(params[1], "-") == 0)
-		{
-			if (oldpwd)
-			{
-				printf("%s\n", oldpwd->value);
-				path = strdup(oldpwd->value);
-			}
-			else
-				path = getcwd(cwd, sizeof(cwd));
-			old_path = getcwd(cwd, sizeof(cwd));
-		}
-		else if (ft_strcmp(params[1], "..") == 0)
-		{
-			path = getcwd(cwd, sizeof(cwd));
-			old_path = strdup(path);
-			i = ft_strlen(path) - 1;
-			while (path[i] && path[i] != '/')
-			{
-				path[i] = '\0';
-				i--;
-			}
-		}
-		else if (params[1][0] != '/')
-		{
-			old_path = getcwd(cwd, sizeof(cwd));
-			path = ft_strcat(ft_strcat(getcwd(cwd, sizeof(cwd)),
-						"/"), params[1]);
-		}
-		else
-		{
-			old_path = getcwd(cwd, sizeof(cwd));
-			path = params[1];
-		}
-		change_path(var, params[1], path, old_path);
-	}
-	else
-	{
-		old_path = getcwd(cwd, sizeof(cwd));
-		path = "/";
-		change_path(var, params[1], path, old_path);
-	}
-}
-
